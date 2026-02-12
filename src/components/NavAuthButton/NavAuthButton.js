@@ -1,11 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation';
 import styles from './NavAuthButton.module.css';
 
 export default function NavAuthButton ({ session }) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const router = useRouter();
   const logOut = async () => {
     await supabase.auth.signOut();
