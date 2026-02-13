@@ -1,18 +1,20 @@
-import NavLink from '../NavLink/NavLink';
-import NavAuthButton from '../NavAuthButton/NavAuthButton';
-import { createClient } from '@/utils/supabase/server';
+'use client'
+import NavLink from '@/components/Navigation/NavLink/NavLink';
+import NavAuthButton from '@/components/Navigation/NavAuthButton/NavAuthButton';
+import { useAuth } from '@/contexts/AuthContext';
 import styles from './Navbar.module.css';
 
 
-export default async function Navbar() {
-  const supabase = await createClient();
-  const {data: {session}} = await supabase.auth.getSession();
+export default function Navbar() {
+  const { user, loading } = useAuth();
+  
+  if (loading) return null;
 
   return (
     <nav className={styles.navbar}>
       <NavLink href="/">Logo</NavLink>
       <div className={styles.btnsWrapper}>
-        {session && (
+        {user && (
           <>
           <NavLink href="/dashboard">Dashboard</NavLink>
           <NavLink href="/settings">Settings</NavLink>
@@ -21,7 +23,7 @@ export default async function Navbar() {
         )}
         <NavLink href="/about">About Us</NavLink>
         <NavLink href="/contact">Contact</NavLink>
-        <NavAuthButton session={session}></NavAuthButton>
+        <NavAuthButton></NavAuthButton>
       </div>
     </nav>
   )
