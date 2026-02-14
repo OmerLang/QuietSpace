@@ -17,13 +17,13 @@ export default function LoginForm() {
       return;
     e.preventDefault();
     setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error){
-      setLoading(false);
-      return console.log("failed logging in");
+      console.error("Login failed:", error.message); 
+      alert(error.message);
+      return;
     }
     router.push("/");
-    router.refresh();
   };
 
   return (

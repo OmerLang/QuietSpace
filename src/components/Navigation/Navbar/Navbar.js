@@ -12,12 +12,14 @@ export default function Navbar() {
   
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const closeMenu = () => setIsOpen(false);
+
   if (loading) return null;
 
   return (
     <nav className={styles.outerContainer}>
       <div className={styles.innerContainer}>
-        <NavLink className={styles.logo} href="/">Logo</NavLink>
+        <NavLink className={styles.logo} href="/">QuiteSpace</NavLink>
         <button type='button' className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ""}`} onClick={toggleMenu}>
           <span className={styles.bar}></span>
           <span className={styles.bar}></span>
@@ -25,18 +27,18 @@ export default function Navbar() {
         </button>
         <div className={`${isOpen ? styles.overlay : ""}`} onClick={isOpen ? toggleMenu : null}></div>
         <div className={`${styles.navLinks} ${isOpen ? styles.navLinksActive : ""}`}>
-          <NavAuthButton></NavAuthButton>
+          <NavAuthButton className={`${isOpen && styles.link}`} onClick={closeMenu}></NavAuthButton>
           {user ? (
             <>
-            <NavLink href="/dashboard">Dashboard</NavLink>
-            <NavLink href="/settings">Settings</NavLink>
-            <NavLink href="/favorites">Favorites</NavLink>
+            <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/dashboard">Dashboard</NavLink>
+            <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/settings">Settings</NavLink>
+            <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/favorites">Favorites</NavLink>
             </>
           ) : (
-            <NavLink href="/signup">Sign-Up</NavLink>
+            <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/signup">Sign-Up</NavLink>
           )}
-          <NavLink href="/about">About Us</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
+          <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/about">About Us</NavLink>
+          <NavLink className={`${isOpen && styles.link}`} onClick={closeMenu} href="/contact">Contact</NavLink>
         </div>
       </div>
     </nav>
