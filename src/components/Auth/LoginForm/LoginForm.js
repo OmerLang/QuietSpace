@@ -28,21 +28,25 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={loginSubmit} className={styles.loginForm}>
-      <label htmlFor="email">Email:</label>
-      <input
-        id="email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className={styles.fieldDiv}>
+        <label htmlFor="email">Email:</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
 
-      <label htmlFor="password">Password:</label>
-      <input
-        id="password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div className={styles.fieldDiv}>
+        <label htmlFor="password">Password:</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
       <button className={styles.submitBtn} type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
     </form>
   );
