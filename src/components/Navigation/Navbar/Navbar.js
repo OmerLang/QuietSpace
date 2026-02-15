@@ -21,9 +21,9 @@ export default function Navbar() {
       <div className={styles.innerContainer}>
         <NavLink className={styles.logo} href="/">QuiteSpace</NavLink>
         <button type='button' className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ""}`} onClick={toggleMenu}>
-          <span className={styles.bar}></span>
-          <span className={styles.bar}></span>
-          <span className={styles.bar}></span>
+          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
+          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
+          <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
         </button>
         <div className={`${isOpen ? styles.overlay : ""}`} onClick={isOpen ? toggleMenu : null}></div>
         <div className={`${styles.navLinks} ${isOpen ? styles.navLinksActive : ""}`}>

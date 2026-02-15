@@ -31,14 +31,57 @@
   height: min-content;
 }
 
-.hamburgerOpen {
-  transform: rotate(90deg);
+.hamburger:hover {
+  cursor: pointer;
 }
 
 .bar {
   width: 1.8rem;
-  height: 1px;
-  border: 1px solid black;
+  height: 2px;
+  background: black;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.hamburgerOpen .bar:first-child {
+  transform: translateY(10px) rotate(-45deg)
+}
+
+.hamburgerOpen .bar:nth-child(2) {
+  background: transparent;
+}
+
+.bar:nth-child(2)::before,
+.bar:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background: #000000;
+  transition: all 0.3s ease;
+}
+
+.bar:nth-child(2)::before {
+  left: 0;
+}
+
+.bar:nth-child(2)::after {
+  right: 0;
+}
+
+.hamburgerOpen .bar:nth-child(2)::before {
+  opacity: 0;
+  transform: translateX(-15px);
+}
+
+.hamburgerOpen .bar:nth-child(2)::after {
+  opacity: 0;
+  transform: translateX(15px);
+}
+
+.hamburgerOpen .bar:nth-child(3) {
+  transform: translateY(-10px) rotate(45deg);
 }
 
 .navLinks {
