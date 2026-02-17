@@ -2,6 +2,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navigation/Navbar/Navbar";
 import { Roboto } from 'next/font/google';
 import styles from './layout.module.css';
+import MapWrapper from "@/components/Map/MapWrapper";
+import { LocationProvider } from "@/contexts/LocationContext";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -18,10 +20,14 @@ export default function RootLayout({ children }) {
       <body>
         <div className={styles.mainLayout}>
           <AuthProvider>
-            <Navbar></Navbar>
-            <main className="mainContent">
-              {children}
-            </main>
+            <LocationProvider>
+              <Navbar></Navbar>
+              <main className="mainContent">
+                <MapWrapper>
+                  {children}
+                </MapWrapper>
+              </main>
+            </LocationProvider>
           </AuthProvider>
         </div>
       </body>
