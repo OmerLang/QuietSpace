@@ -1,8 +1,7 @@
 'use client'
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
 
 
 
@@ -24,6 +23,7 @@ export default function MapInstance({ id, children, ...props }){
   return (
     <Map
       id={id} 
+      mapId={ id==="homepage-map" ? '8dcee7afbbbf8ac17e417c44' : '' }
       defaultCenter={{ lat: 32.07, lng: 34.78 }}
       reuseMaps={true}
       defaultZoom={11}
