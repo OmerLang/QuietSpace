@@ -6,14 +6,14 @@ import { useLocation } from "@/contexts/LocationContext"
 
 
 
-export default function QuitePlacesByRadius(){
-  
+export default function QuietPlacesByRadius(){
+
   const location = useLocation();
   const supabase = createClient();
 
   const queryClient = new QueryClient();
 
-  const { isPending, isError, error, data} = useQuery({ queryKey: ["byRadius"], queryFn: fetchPlaces })
+  const { isPending, isError, error, data } = useQuery({ queryKey: ["byRadius"], queryFn: fetchPlaces });
 
   if (isPending) return <span>Loading...</span>
 

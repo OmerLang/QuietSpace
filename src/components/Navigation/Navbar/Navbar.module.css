@@ -108,6 +108,10 @@
     transform: translateX(0);
 }
 
+.noTransition {
+  transition: none;
+}
+
 .overlay {
   position: fixed;
   top: var(--navbar-height);
@@ -143,7 +147,8 @@
     border-radius: 0;
     padding: 0;
     z-index: auto;
-  }
+  }  
+  
 }
 .link {
   display: flex;
