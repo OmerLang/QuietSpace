@@ -1,7 +1,8 @@
 'use client'
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
-import { useEffect } from "react";
+import RenderMarkers from "./Markers/RenderMarkers/RenderMarkers";
+import { useEffect, useState } from "react";
 
 
 
@@ -10,6 +11,7 @@ export default function MapInstance({ id, children, ...props }){
 
   const location = useLocation();
   const map = useMap(id);
+  const [activePoi, setActivePoi] = useState(null);
 
   useEffect(() => {
     if (!map || !location) {
@@ -18,7 +20,18 @@ export default function MapInstance({ id, children, ...props }){
     map.panTo(location)
     map.setZoom(14);
   },[map, location])
- 
+
+  const onGooglePoiClick = (event) => {
+    const { detail } = event;
+    if (detail.placeId) {
+      event.stop();
+      if (activePoi?.placeId === detail.placeId) return;
+      setActivePoi({ placeId: detail.placeId, latLng: detail.latLng })
+    }
+    else {
+      setActivePoi(null);
+    }
+  }
 
   return (
     <Map
@@ -26,6 +39,7 @@ export default function MapInstance({ id, children, ...props }){
       mapId={ id==="homepage-map" ? '8dcee7afbbbf8ac17e417c44' : '' }
       defaultCenter={{ lat: 32.07, lng: 34.78 }}
       reuseMaps={true}
+      onClick={onGooglePoiClick}
       defaultZoom={11}
       minZoom={3}
       restriction={{
@@ -33,6 +47,10 @@ export default function MapInstance({ id, children, ...props }){
       strictBounds: true,
       }}
       {...props}>
+      {activePoi && 
+        <RenderMarkers
+          activePoi={activePoi}
+        />}
       {children}
     </Map>
   );
