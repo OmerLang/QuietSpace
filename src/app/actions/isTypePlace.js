@@ -1,5 +1,6 @@
 'use server'
-import { createClient } from "@/utils/supabase/service_role"
+import { getStaticClient } from "@/utils/supabase/static";
+import { createClient } from "@/utils/supabase/server";
 import { after } from "next/server";
 
 const allowedTypes = [
@@ -15,8 +16,9 @@ const allowedTypes = [
 ];
 
 export async function isTypePlace(placeId) {
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  if (placeId === 'warmup-ping') return true;
+  const staticSupabase = getStaticClient();
+  const { data, error } = await staticSupabase
     .from('poi_cache')
     .select('place_type, is_suitable')
     .eq('google_place_id', placeId)
@@ -46,6 +48,7 @@ export async function isTypePlace(placeId) {
     const type = googlePlace.types?.find((type) => allowedTypes.includes(type))
     const is_suitable = Boolean(type);
     after(async () => {
+      const supabase = await createClient();
       const { error } = await supabase
         .from('poi_cache')
         .insert({ google_place_id: googlePlace.id, place_type: type || googlePlace.types[0], is_suitable: is_suitable })

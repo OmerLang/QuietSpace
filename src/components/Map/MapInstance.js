@@ -15,6 +15,17 @@ export default function MapInstance({ id, children, ...props }){
   const [activePoi, setActivePoi] = useState(null);
 
   useEffect(() => {
+    const wakeUpServer = async () => {
+      try {
+        await isTypePlace('warmup-ping')
+      } catch (e) {
+
+      }
+    };
+    wakeUpServer();
+  },[])
+
+  useEffect(() => {
     if (!map || !location) {
       return;
     }
