@@ -2,7 +2,7 @@
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
 import { isTypePlace } from "@/app/actions/isTypePlace";
-import RenderMarkers from "./Markers/RenderMarkers/RenderMarkers";
+import MarkerWithInfoWindow from "./Markers/MarkerWithInfoWindow/MarkerWithInfoWindow";
 import { useEffect, useState, useCallback } from "react";
 
 
@@ -57,8 +57,8 @@ export default function MapInstance({ id, children, ...props }){
       }}
       {...props}>
       {activePoi && 
-        <RenderMarkers
-          activePoi={activePoi}
+        <MarkerWithInfoWindow
+          position={activePoi.latLng}
         />}
       {children}
     </Map>

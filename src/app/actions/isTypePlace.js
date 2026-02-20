@@ -22,7 +22,10 @@ export async function isTypePlace(placeId) {
     .eq('google_place_id', placeId)
     .maybeSingle();
   
-  if (error) return error;
+  if (error) {
+    console.log(error);
+    return false;
+  }
   if (data === null) {
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`,
