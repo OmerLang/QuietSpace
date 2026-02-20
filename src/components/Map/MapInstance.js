@@ -1,8 +1,9 @@
 'use client'
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
+import { isTypePlace } from "@/app/actions/isTypePlace";
 import RenderMarkers from "./Markers/RenderMarkers/RenderMarkers";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 
 
@@ -21,17 +22,25 @@ export default function MapInstance({ id, children, ...props }){
     map.setZoom(14);
   },[map, location])
 
-  const onGooglePoiClick = (event) => {
+  const onGooglePoiClick = useCallback(async (event) => {
+    event.stop();
     const { detail } = event;
-    if (detail.placeId) {
-      event.stop();
-      if (activePoi?.placeId === detail.placeId) return;
-      setActivePoi({ placeId: detail.placeId, latLng: detail.latLng })
+    console.log(detail);
+    if (!detail.placeId) {
+      setActivePoi(null)
+      return
     }
-    else {
+    const place = await isTypePlace(detail.placeId);
+    if (!place){
       setActivePoi(null);
     }
-  }
+    else {
+      setActivePoi((prev) => {
+        if (prev?.placeId === detail.placeId) return prev;
+        return { placeId: detail.placeId, latLng: detail.latLng }
+      })
+    }      
+  },[]);
 
   return (
     <Map
