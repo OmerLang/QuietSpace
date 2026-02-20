@@ -1,6 +1,6 @@
 'use server'
 import { getStaticClient } from "@/utils/supabase/static";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/service_role";
 import { after } from "next/server";
 
 const allowedTypes = [
@@ -41,9 +41,6 @@ export async function isTypePlace(placeId) {
       }
     )
     const googlePlace = await response.json();
-    if (googlePlace)
-      console.log("Google response types1:", googlePlace);
-
 
     const type = googlePlace.types?.find((type) => allowedTypes.includes(type))
     const is_suitable = Boolean(type);
