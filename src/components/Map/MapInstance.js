@@ -14,7 +14,7 @@ export default function MapInstance({ id, children, ...props }){
   const location = useLocation();
   const map = useMap(id);
   const [activePoi, setActivePoi] = useState(null);
-  const [cachedPois, setCachedPois] = useState(null);
+  const [cachedPois, setCachedPois] = useState([]);
 
   const handleIdle = useCallback(async () => {
     if(!map) return;
@@ -75,12 +75,15 @@ useEffect(() => {
   const onGooglePoiClick = useCallback(async (event) => {
     event.stop();
     const { detail } = event;
+    console.log("Cache at time of click:", cachedPois);
     if (!detail.placeId) {
       setActivePoi(null)
       return
     }
-    if (cachedPois?.includes(detail.placeId))
+    if (cachedPois?.includes(detail.placeId)){
+      console.log("INSTANT HIT! No server call needed.");
       return setActivePoi({ placeId: detail.placeId, latLng: detail.latLng })
+    }
     const place = await isTypePlace(detail.placeId);
     if (!place){
       setActivePoi(null);
