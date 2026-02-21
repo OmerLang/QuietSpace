@@ -36,19 +36,20 @@ export async function isTypePlace(placeId) {
         headers: {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'id,types'
+          'X-Goog-FieldMask': 'id,types,location'
         }
       }
     )
     const googlePlace = await response.json();
-
+    if (!googlePlace?.location?.latitude) return;
     const type = googlePlace.types?.find((type) => allowedTypes.includes(type))
     const is_suitable = Boolean(type);
     after(async () => {
       const supabase = await createClient();
+      const pointWKT = `POINT(${googlePlace.location.longitude} ${googlePlace.location.latitude})`;
       const { error } = await supabase
         .from('poi_cache')
-        .insert({ google_place_id: googlePlace.id, place_type: type || googlePlace.types[0], is_suitable: is_suitable })
+        .insert({ google_place_id: googlePlace.id, place_type: type || googlePlace.types[0],location: pointWKT, is_suitable: is_suitable })
       if (error) console.log(error)
     });
     return is_suitable;

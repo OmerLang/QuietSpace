@@ -2,6 +2,7 @@
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
 import { isTypePlace } from "@/app/actions/isTypePlace";
+import { fetchPoiCache } from "@/app/actions/fetchPoiCache";
 import MarkerWithInfoWindow from "./Markers/MarkerWithInfoWindow/MarkerWithInfoWindow";
 import { useEffect, useState, useCallback } from "react";
 
@@ -13,6 +14,44 @@ export default function MapInstance({ id, children, ...props }){
   const location = useLocation();
   const map = useMap(id);
   const [activePoi, setActivePoi] = useState(null);
+  const [cachedPois, setCachedPois] = useState(null);
+
+  const handleIdle = useCallback(async () => {
+    if(!map) return;
+    if (map.getZoom() < 15) return;
+    const bounds = map.getBounds();
+    if (!bounds) return;
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    const searchArea = 
+      {
+        min_lat: sw.lat(),
+        max_lat: ne.lat(),
+        min_lng: sw.lng(),
+        max_lng: ne.lng()
+      };
+    const data = await fetchPoiCache(searchArea);
+    if (data && data.length > 0) {
+    const newIds = data.map(item => item.google_place_id);
+
+    setCachedPois((prev) => {
+      const currentCache = prev || [];
+      
+      const existingIds = new Set(currentCache);
+      
+      const filteredNewIds = newIds.filter(id => !existingIds.has(id));
+
+      if (filteredNewIds.length === 0) return currentCache;
+
+      return [...currentCache, ...filteredNewIds];
+    });
+  }
+}, [map]);
+
+useEffect(() => {
+  console.log("Current Cache Size:", cachedPois?.length || 0);
+  console.log("Current Cache Content:", cachedPois);
+}, [cachedPois]);
 
   useEffect(() => {
     const wakeUpServer = async () => {
@@ -30,17 +69,18 @@ export default function MapInstance({ id, children, ...props }){
       return;
     }
     map.panTo(location)
-    map.setZoom(14);
+    map.setZoom(15);
   },[map, location])
 
   const onGooglePoiClick = useCallback(async (event) => {
     event.stop();
     const { detail } = event;
-    console.log(detail);
     if (!detail.placeId) {
       setActivePoi(null)
       return
     }
+    if (cachedPois?.includes(detail.placeId))
+      return setActivePoi({ placeId: detail.placeId, latLng: detail.latLng })
     const place = await isTypePlace(detail.placeId);
     if (!place){
       setActivePoi(null);
@@ -51,7 +91,7 @@ export default function MapInstance({ id, children, ...props }){
         return { placeId: detail.placeId, latLng: detail.latLng }
       })
     }      
-  },[]);
+  },[cachedPois]);
 
   return (
     <Map
@@ -62,6 +102,7 @@ export default function MapInstance({ id, children, ...props }){
       onClick={onGooglePoiClick}
       defaultZoom={11}
       minZoom={3}
+      onIdle={handleIdle}
       restriction={{
       latLngBounds: {north: 33.8, south: 29, west: 33.5, east: 36.2},
       strictBounds: true,
