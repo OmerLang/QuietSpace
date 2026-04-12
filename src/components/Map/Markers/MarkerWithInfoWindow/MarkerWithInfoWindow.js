@@ -1,20 +1,20 @@
 import { InfoWindow } from "@vis.gl/react-google-maps";
 import { AdvancedMarker, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
-import { memo, useCallback } from "react";
-import { useState } from "react";
+import { memo } from "react";
 
-const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow({ position }) {
+const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow({ activePoi }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
+
 
   return (
     <>
       <AdvancedMarker
-        position = { position }
+        position = { activePoi.location }
         ref={markerRef}>
           <div></div>
       </AdvancedMarker>
 
-      {position && (
+      {activePoi && (
         <InfoWindow
           anchor={marker}
           headerDisabled={true}

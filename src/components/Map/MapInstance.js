@@ -32,26 +32,23 @@ export default function MapInstance({ id, children, ...props }){
       };
     const data = await fetchPoiCache(searchArea);
     if (data && data.length > 0) {
-    const newIds = data.map(item => item.google_place_id);
-
-    setCachedPois((prev) => {
-      const currentCache = prev || [];
-      
-      const existingIds = new Set(currentCache);
-      
-      const filteredNewIds = newIds.filter(id => !existingIds.has(id));
-
-      if (filteredNewIds.length === 0) return currentCache;
-
-      return [...currentCache, ...filteredNewIds];
-    });
+      const formattedData = data.map((item) => ({
+        google_place_id: item.google_place_id,
+        is_suitable: item.is_suitable,
+        location: {
+          lat: item.lat,
+          lng: item.lng
+        }
+      }))
+      setCachedPois((prev) => {
+      const existingIds = new Set(prev.map(item => item.google_place_id));
+      const newItems = formattedData.filter(item => !existingIds.has(item.google_place_id));
+      if (newItems.length === 0) return prev;
+      return [...prev, ...newItems];
+    })
   }
 }, [map]);
 
-useEffect(() => {
-  console.log("Current Cache Size:", cachedPois?.length || 0);
-  console.log("Current Cache Content:", cachedPois);
-}, [cachedPois]);
 
   useEffect(() => {
     const wakeUpServer = async () => {
@@ -77,21 +74,21 @@ useEffect(() => {
     const { detail } = event;
     console.log("Cache at time of click:", cachedPois);
     if (!detail.placeId) {
-      setActivePoi(null)
-      return
+      return setActivePoi(null)
     }
-    if (cachedPois?.includes(detail.placeId)){
-      console.log("INSTANT HIT! No server call needed.");
-      return setActivePoi({ placeId: detail.placeId, latLng: detail.latLng })
+    const cachedMatch = cachedPois?.find(p => p.google_place_id === detail.placeId);
+    if (cachedMatch){
+      // console.log("INSTANT HIT! No server call needed.");
+      return setActivePoi(cachedMatch);
     }
     const place = await isTypePlace(detail.placeId);
-    if (!place){
+    if (!place.is_suitable){
       setActivePoi(null);
     }
     else {
       setActivePoi((prev) => {
-        if (prev?.placeId === detail.placeId) return prev;
-        return { placeId: detail.placeId, latLng: detail.latLng }
+        if (prev?.placeId === place.google_place_id) return prev;
+        return place;
       })
     }      
   },[cachedPois]);
@@ -113,7 +110,7 @@ useEffect(() => {
       {...props}>
       {activePoi && 
         <MarkerWithInfoWindow
-          position={activePoi.latLng}
+          activePoi={activePoi}
         />}
       {children}
     </Map>

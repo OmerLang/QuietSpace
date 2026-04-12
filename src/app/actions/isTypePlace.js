@@ -18,15 +18,21 @@ const allowedTypes = [
 export async function isTypePlace(placeId) {
   if (placeId === 'warmup-ping') return true;
   const staticSupabase = getStaticClient();
-  const { data, error } = await staticSupabase
+  const { data } = await staticSupabase
     .from('poi_cache')
-    .select('place_type, is_suitable')
+    .select('google_place_id, is_suitable, location')
     .eq('google_place_id', placeId)
     .maybeSingle();
   
-  if (error) {
-    console.log(error);
-    return false;
+  if (data) {
+    return {
+      google_place_id: placeId,
+      is_suitable: data.is_suitable,
+      location: {
+        lat: data.location?.coordinates?.[1],
+        lng: data.location?.coordinates?.[0]
+      }
+    }
   }
   if (data === null) {
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
@@ -52,7 +58,13 @@ export async function isTypePlace(placeId) {
         .insert({ google_place_id: googlePlace.id, place_type: type || googlePlace.types[0],location: pointWKT, is_suitable: is_suitable })
       if (error) console.log(error)
     });
-    return is_suitable;
+    return {
+      google_place_id: googlePlace.id,
+      is_suitable: is_suitable,
+      location: {
+        lat: googlePlace.location?.latitude,
+        lng: googlePlace.location?.longitude
+      }
+    }
   }
-  return data.is_suitable;
 }
