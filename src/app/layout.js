@@ -5,6 +5,7 @@ import styles from './layout.module.css';
 import MapWrapper from "@/components/Map/MapWrapper";
 import { LocationProvider } from "@/contexts/LocationContext";
 import MobileDetector from "@/components/MobileDetector/MobileDetector";
+import { PoisProvider } from "@/contexts/PoisContext";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -25,12 +26,14 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <LocationProvider>
               <MobileDetector/>
-              <Navbar></Navbar>
-              <main className="mainContent">
-                <MapWrapper>
-                  {children}
-                </MapWrapper>
-              </main>
+                <PoisProvider>
+                <Navbar></Navbar>
+                <main className="mainContent">
+                  <MapWrapper>
+                    {children}
+                  </MapWrapper>
+                </main>
+              </PoisProvider>
             </LocationProvider>
           </AuthProvider>
         </div>

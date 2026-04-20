@@ -2,10 +2,10 @@
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useLocation } from "@/contexts/LocationContext";
 import { isTypePlace } from "@/app/actions/isTypePlace";
-import { fetchPoiCache } from "@/app/actions/fetchPoiCache";
+import { fetchPoiCache, getQuietSpacesByZoom } from "@/app/actions/fetchPoiCache";
+import { usePois } from "@/contexts/PoisContext";
 import MarkerWithInfoWindow from "./Markers/MarkerWithInfoWindow/MarkerWithInfoWindow";
-import { useEffect, useState, useCallback } from "react";
-
+import { useEffect, useCallback } from "react";
 
 
 
@@ -13,12 +13,15 @@ export default function MapInstance({ id, children, ...props }){
 
   const location = useLocation();
   const map = useMap(id);
-  const [activePoi, setActivePoi] = useState(null);
-  const [cachedPois, setCachedPois] = useState([]);
+  const { setActivePoi, cachedPois, setCachedPois } = usePois();
 
   const handleIdle = useCallback(async () => {
     if(!map) return;
-    if (map.getZoom() < 15) return;
+    const zoom = map.getZoom();
+    if (zoom < 12) {
+      return
+    }
+    console.log("zoom:", zoom);
     const bounds = map.getBounds();
     if (!bounds) return;
     const ne = bounds.getNorthEast();
@@ -30,25 +33,37 @@ export default function MapInstance({ id, children, ...props }){
         min_lng: sw.lng(),
         max_lng: ne.lng()
       };
-    const data = await fetchPoiCache(searchArea);
+    
+    let data = [];
+    if (zoom >= 16 )
+      data = await fetchPoiCache(searchArea);
+    else {
+      const gridSizes = { 12: 0.05, 13: 0.02, 14: 0.01, 15: 0.005 }
+      const gridSize = gridSizes[zoom];
+      data = await getQuietSpacesByZoom({ ...searchArea, grid_size_degrees: gridSize })
+    }
+
+    console.log("the Data:", data)
     if (data && data.length > 0) {
-      const formattedData = data.map((item) => ({
-        google_place_id: item.google_place_id,
-        is_suitable: item.is_suitable,
-        location: {
-          lat: item.lat,
-          lng: item.lng
-        }
-      }))
-      setCachedPois((prev) => {
-      const existingIds = new Set(prev.map(item => item.google_place_id));
-      const newItems = formattedData.filter(item => !existingIds.has(item.google_place_id));
-      if (newItems.length === 0) return prev;
-      return [...prev, ...newItems];
+      const formattedData = data.map(({ lat, lng, ...rest }) => ({
+      ...rest,
+      is_suitable: true,
+      location: { lat, lng }
+    }))
+    setCachedPois((prev) => {
+    const existingIds = new Set(prev.map(item => item.google_place_id));
+    const newItems = formattedData.filter(item => !existingIds.has(item.google_place_id));
+    if (newItems.length === 0) return prev;
+    return [...prev, ...newItems];
     })
-  }
+    }
+    
 }, [map]);
 
+useEffect(() => {
+  console.log("currently in cache:", cachedPois);
+  console.table(cachedPois);
+}, [cachedPois]);
 
   useEffect(() => {
     const wakeUpServer = async () => {
@@ -59,7 +74,7 @@ export default function MapInstance({ id, children, ...props }){
       }
     };
     wakeUpServer();
-  },[])
+  },[map])
 
   useEffect(() => {
     if (!map || !location) {
@@ -72,26 +87,38 @@ export default function MapInstance({ id, children, ...props }){
   const onGooglePoiClick = useCallback(async (event) => {
     event.stop();
     const { detail } = event;
-    console.log("Cache at time of click:", cachedPois);
+    console.log("DETAILS:", detail)
     if (!detail.placeId) {
       return setActivePoi(null)
     }
-    const cachedMatch = cachedPois?.find(p => p.google_place_id === detail.placeId);
-    if (cachedMatch){
-      // console.log("INSTANT HIT! No server call needed.");
-      return setActivePoi(cachedMatch);
+    let alreadyCached = false;
+    setCachedPois((prev) => {
+      const cachedMatch = prev.find((poi) => poi.google_place_id === detail.placeId);
+      if (cachedMatch) {
+        alreadyCached = true;
+        setActivePoi(cachedMatch);
+      }
+      return prev
+    })
+    if (!alreadyCached){
+      const place = await isTypePlace(detail.placeId);
+      if (!place.is_suitable){
+        setActivePoi(null);
+      }
+      else {
+        setActivePoi((prev) => {
+          if (prev?.placeId === place.google_place_id) return prev;
+          return place;
+        })
+        setCachedPois((prev) => {
+          const poiInCache = prev.some((poi) => poi.google_place_id === place.google_place_id)
+          if (poiInCache) return prev;
+          return [...prev, place];
+        })
+      }
     }
-    const place = await isTypePlace(detail.placeId);
-    if (!place.is_suitable){
-      setActivePoi(null);
-    }
-    else {
-      setActivePoi((prev) => {
-        if (prev?.placeId === place.google_place_id) return prev;
-        return place;
-      })
-    }      
-  },[cachedPois]);
+  }
+  ,[]);
 
   return (
     <Map
@@ -108,10 +135,7 @@ export default function MapInstance({ id, children, ...props }){
       strictBounds: true,
       }}
       {...props}>
-      {activePoi && 
-        <MarkerWithInfoWindow
-          activePoi={activePoi}
-        />}
+      {<MarkerWithInfoWindow/>}
       {children}
     </Map>
   );

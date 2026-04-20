@@ -1,0 +1,25 @@
+.zoom_12 {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  outline: 2px solid red;
+}
+
+.zoom_13 {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  outline: 2px solid red;
+}
+.zoom_14 {
+  display: flex;
+  width: 15px;
+  height: 15px;
+  outline: 2px solid red;
+}
+.zoom_15 {
+  display: flex;
+  width: 5px;
+  height: 5px;
+  outline: 2px solid red;
+}
