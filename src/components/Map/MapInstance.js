@@ -17,7 +17,7 @@ export default function MapInstance({ id, children, ...props }){
 
   const handleIdle = useCallback(async () => {
     if(!map) return;
-    const zoom = map.getZoom();
+    const zoom = Math.floor(map.getZoom());
     if (zoom < 12) {
       return
     }
@@ -40,6 +40,7 @@ export default function MapInstance({ id, children, ...props }){
     else {
       const gridSizes = { 12: 0.05, 13: 0.02, 14: 0.01, 15: 0.005 }
       const gridSize = gridSizes[zoom];
+      console.log("size:", gridSize)
       data = await getQuietSpacesByZoom({ ...searchArea, grid_size_degrees: gridSize })
     }
 

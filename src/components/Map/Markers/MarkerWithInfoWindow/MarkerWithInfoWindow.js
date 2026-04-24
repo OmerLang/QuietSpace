@@ -2,6 +2,7 @@ import { InfoWindow } from "@vis.gl/react-google-maps";
 import { useMap, AdvancedMarker, useAdvancedMarkerRef, CollisionBehavior } from "@vis.gl/react-google-maps";
 import { act, memo, useEffect, useState } from "react";
 import PoiInfoWindow from "../PoiInfoWindow/PoiInfoWindow";
+import QuietSpacePin from "../QuietSpacePin/QuietSpacePin";
 import { usePois } from "@/contexts/PoisContext";
 import styles from "./MarkerWithInfoWindow.module.css"
 
@@ -40,17 +41,18 @@ const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow() {
         key={poi.google_place_id}
         onClick={() => setAsActive(poi)}
         position = { poi.location }
+        zIndex={1000}
         ref={poi.google_place_id === activePoi?.google_place_id ? activeMarkerRef : null}>
-        <div className={zoom > 15 ? styles.maxZoom : (zoomTable[Math.floor(zoom)] || styles.zoom_12)}>{poi.is_quiet_space ? "quite_space" : "" }</div>
+        {poi.is_quiet_space && zoom >=12 && <QuietSpacePin total_rating={poi.total_rating} google_place_id={poi.google_place_id}/>}
       </AdvancedMarker>
       ))}
 
       {activePoi && activeMarker && (
         <InfoWindow
-          key={activePoi.google_place_id}
+          key={`${activePoi.google_place_id}-${activeMarker.location?.lat}`}
           anchor={activeMarker}
           headerDisabled={true}
-          pixelOffset={[0,-25]}>
+          pixelOffset={activePoi?.is_quiet_space ? [0,0] : [0,-25]}>
         <PoiInfoWindow/>
         </InfoWindow>
       )}

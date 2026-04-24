@@ -1,0 +1,25 @@
+.bouncingPin{
+  animation: bounceIn 0.8s cubic-bezier(0.36, 0, 0.66, -0.56) alternate;
+  cursor: pointer;
+
+}
+
+
+
+@keyframes bounceIn {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-20px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-8px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1); 
+  }
+}
