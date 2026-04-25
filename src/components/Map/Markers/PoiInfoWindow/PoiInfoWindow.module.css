@@ -1,0 +1,51 @@
+.popupWindow {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: auto;
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image {
+  height: 170px;
+  width: 250px;
+  object-fit:cover;
+}
+
+.poiInfo {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  gap: 3px;
+}
+
+.poiInfo > :first-child {
+  font-size: 1.1em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.poiInfo > :nth-child(2) {
+  font-style: italic;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rateInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+  padding-top: 15px;
+  gap: 15px;
+  padding-bottom: 10px;
+}

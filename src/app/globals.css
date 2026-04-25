@@ -19,6 +19,36 @@ body {
   overflow-x: hidden;
 }
 
+/* 1. Target the main bubble container */
+.gm-style-iw-c {
+  padding: 0 !important;
+  max-height: none !important;
+}
+
+/* 2. Target the internal content wrapper */
+.gm-style-iw-d {
+  overflow: hidden !important; /* Prevents unwanted scrollbars */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 3. Remove the 'Close' button padding if you aren't using the header */
+.gm-style-iw-tc::after {
+  background: white; /* Matches the tail color to your content if needed */
+}
+
+.gm-style-iw-c {
+  /* Remove the default shadow */
+  box-shadow: none !important;
+
+  /* Add your custom shadow */
+  box-shadow: 0 4px 15px 6px rgba(0, 0, 0, 0.4) !important;
+
+  /* Optional: Control the border and background color here too */
+  border: none !important;
+  background-color: #ffffff !important;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

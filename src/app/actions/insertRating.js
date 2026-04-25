@@ -6,8 +6,8 @@ const inputCheck = (name, value) => {
   const num = Number(value);
   if (!value || value === "")
     return { passed: false, error: `${name} must be rated` }
-  if (Number.isNaN(num) || num < 1 || Number(value) > 10)
-    return { passed: false, error: `Only numbers between 1-10 are allowed for ${name} field` }
+  if (Number.isNaN(num) || num < 1 || Number(value) > 5)
+    return { passed: false, error: `Only numbers between 1-5 are allowed for ${name} field` }
   return { passed: true }
 }
 

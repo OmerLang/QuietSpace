@@ -10,7 +10,7 @@
   0% {
     transform: translateY(0) scale(1);
   }
-  30% {
+  20% {
     transform: translateY(-20px) scale(1.1);
   }
   50% {

@@ -67,19 +67,19 @@ import styles from "./RatingForm.module.css"
     <form className={styles.ratingForm} onSubmit={insertData}>
       <div className={styles.fieldDiv}>
         <label>Wifi Rating:</label>
-        <input name="wifi" type="number" value={ratings.wifi} onChange={handleChange} required min="1" max="10" placeholder="1-10"/>
+        <input name="wifi" type="number" value={ratings.wifi} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
         <label>Noise Level Rating::</label>
-        <input name="noise_level" type="number" value={ratings.noise_level} onChange={handleChange} required min="1" max="10" placeholder="1-10"/>
+        <input name="noise_level" type="number" value={ratings.noise_level} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
         <label>Seating Comfort Rating:</label>
-        <input name="seating_comfort" type="number" value={ratings.seating_comfort} onChange={handleChange} required min="1" max="10" placeholder="1-10"/>
+        <input name="seating_comfort" type="number" value={ratings.seating_comfort} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
         <label>Charging Accessibility Rating:</label>
-        <input name="charging_accessibility" type="number" value={ratings.charging_accessibility} onChange={handleChange} required min="1" max="10" placeholder="1-10"/>
+        <input name="charging_accessibility" type="number" value={ratings.charging_accessibility} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
         <label>{ratings.comment.length} / 200 Characters</label>
