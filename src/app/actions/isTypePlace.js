@@ -121,7 +121,7 @@ export async function isTypePlace(placeId) {
       }
       const  { error } = await supabase
         .from('poi_cache')
-        .insert(insertData);
+        .insert([{ google_place_id: '...' }], { upsert: true, ignoreDuplicates: true });
         if (error) console.log("Supabase Insert Error:", error);
     });
     return {

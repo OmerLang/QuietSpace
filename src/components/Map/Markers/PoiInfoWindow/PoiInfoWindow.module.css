@@ -1,7 +1,7 @@
 .popupWindow {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 240px;
   height: auto;
   animation: slideIn 0.5s ease-out forwards;
 }
@@ -17,7 +17,7 @@
 
 .image {
   height: 170px;
-  width: 250px;
+  width: 240px;
   object-fit:cover;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .poiInfo > :first-child {
-  font-size: 1.1em;
+  font-size: 1.3em;
   font-weight: 600;
   text-align: center;
 }
@@ -48,4 +48,23 @@
   padding-top: 15px;
   gap: 15px;
   padding-bottom: 10px;
+}
+
+.loginBtn {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.rateWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rateWrapper > span {
+  display: inline-block;
+  width: min-content;
+  font-size: 1em;
+  font-weight: 600;
+  padding-top: 3px;
 }

@@ -6,6 +6,7 @@ import RatingForm from "@/components/RatingForm/RatingForm";
 import { usePois } from "@/contexts/PoisContext";
 import NavLink from "@/components/Navigation/NavLink/NavLink";
 import Login from "@/app/login/page";
+import StarRating from "../MarkerWithInfoWindow/StarRating/StarRating";
 
 
 export default function PoiInfoWindow () {
@@ -30,11 +31,11 @@ export default function PoiInfoWindow () {
         <>
           {activePoi.is_quiet_space ? (
             <div className={styles.rateInfo}>
-              <p>Wifi: {activePoi.wifi_rating}</p>        
-              <p>Quiet: {activePoi.noise_level_rating}</p>        
-              <p>Seating comfort: {activePoi.seating_comfort_rating}</p>
-              <p>Charging accessibility: {activePoi.charging_accessibility_rating}</p> 
-              <button onClick={() => setIsFormOpen(!isFormOpen)}>
+              <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
+              <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
+              <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
+              <div className={styles.rateWrapper}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
+               <button onClick={() => setIsFormOpen(!isFormOpen)}>
                 {!isFormOpen ? "Click to rate your experience" : "Close"}
               </button>
               {isFormOpen && <RatingForm setIsFormOpen={setIsFormOpen}/>}
@@ -52,10 +53,10 @@ export default function PoiInfoWindow () {
         <>
           {activePoi.is_quiet_space ? (
             <div className={styles.rateInfo}>
-              <p>Wifi: {activePoi.wifi_rating}</p>        
-              <p>Quiet: {activePoi.noise_level_rating}</p>        
-              <p>Seating comfort: {activePoi.seating_comfort_rating}</p>        
-              <p>Charging accessibility: {activePoi.charging_accessibility_rating}</p> 
+              <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
+              <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
+              <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
+              <div className={styles.rateWrapper}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
               <NavLink className={styles.loginBtn} href={"/login"}>Login to rate your experience</NavLink>              
             </div>
           ) : (
