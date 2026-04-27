@@ -68,6 +68,14 @@ a {
   text-decoration: none;
 }
 
+button {
+  all: unset;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  display: flex;
+}
+
 input, textarea, select, button {
   font-family: inherit;
 }

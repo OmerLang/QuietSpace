@@ -34,16 +34,16 @@ export default function PoiInfoWindow () {
               <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
               <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
               <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
-              <div className={styles.rateWrapper}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
-               <button onClick={() => setIsFormOpen(!isFormOpen)}>
-                {!isFormOpen ? "Click to rate your experience" : "Close"}
+              <div className={styles.rateWrapperC}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
+               <button className={styles.openFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
+                {!isFormOpen ? <span className={styles.btnText}>Rate your experience</span> : <span className={styles.btnText}>Close</span>}
               </button>
               {isFormOpen && <RatingForm setIsFormOpen={setIsFormOpen}/>}
             </div>
           ) : (
             <>
-              <button onClick={() => setIsFormOpen(!isFormOpen)}>
-                {!isFormOpen ? "Click to add to QuietSpace!" : "Close"}
+              <button className={styles.openFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
+                {!isFormOpen ? <span className={styles.btnText}>Add to QuietSpace!</span> : <span className={styles.btnText}>Close</span>}
               </button>
               {isFormOpen && <RatingForm setIsFormOpen={setIsFormOpen}/>}
             </>
@@ -56,7 +56,7 @@ export default function PoiInfoWindow () {
               <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
               <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
               <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
-              <div className={styles.rateWrapper}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
+              <div className={styles.rateWrapperC}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
               <NavLink className={styles.loginBtn} href={"/login"}>Login to rate your experience</NavLink>              
             </div>
           ) : (
