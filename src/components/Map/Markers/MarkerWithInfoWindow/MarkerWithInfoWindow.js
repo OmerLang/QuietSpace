@@ -1,17 +1,9 @@
 import { InfoWindow } from "@vis.gl/react-google-maps";
 import { useMap, AdvancedMarker, useAdvancedMarkerRef, CollisionBehavior } from "@vis.gl/react-google-maps";
-import { act, memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import PoiInfoWindow from "../PoiInfoWindow/PoiInfoWindow";
 import QuietSpacePin from "../QuietSpacePin/QuietSpacePin";
 import { usePois } from "@/contexts/PoisContext";
-import styles from "./MarkerWithInfoWindow.module.css"
-
- const zoomTable = {
-    12: styles.zoom_12,
-    13: styles.zoom_13,
-    14: styles.zoom_14,
-    15: styles.zoom_15
-  }
 
 
 const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow() {
