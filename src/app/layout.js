@@ -15,7 +15,17 @@ const roboto = Roboto({
 })
 
 
-
+export const metadata = {
+  title: "QuietSpace",
+  description: "Find your quiet spot.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover", // Essential for PWA/Mobile notches
+  },
+};
 
 
 export default function RootLayout({ children }) {
