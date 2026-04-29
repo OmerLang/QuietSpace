@@ -30,45 +30,57 @@ export default function PoiInfoWindow () {
       {user ? (
         <>
           {activePoi.is_quiet_space ? (
-            <div className={styles.rateInfo}>
-              {!isFormOpen ? (
-                <>
-                  <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
-                  <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
-                  <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
-                  <div className={styles.rateWrapperC}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
-                </>
-                ) : (
-                    <RatingForm setIsFormOpen={setIsFormOpen}/>
-                  )}
-                  <button className={styles.openFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
-                  <span className={styles.btnText}>{!isFormOpen ? "Rate your experience" : "Close"}</span>
-                  </button>
-            </div>
-          ) : (
             <>
-              <div className={styles.rateInfo}>
-                {isFormOpen && <RatingForm setIsFormOpen={setIsFormOpen}/>}
+            <div className={`${styles.wrapper} ${!isFormOpen ? styles.ratingVisible : styles.formVisible}`}>
+              <div className={`${styles.rateInfo} ${isFormOpen && styles.hideRatingsText}`}>
+                <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
+                <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
+                <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
+                <div className={styles.rateWrapperC}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>  
+                {!isFormOpen && 
                 <button className={styles.openFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
-                  {!isFormOpen ? <span className={styles.btnText}>Add to QuietSpace!</span> : <span className={styles.btnText}>Close</span>}
-                </button>
+                  <span className={styles.btnText }>Rate your experience</span>
+                </button>}  
+              </div>
+              <div className={`${styles.formInfo} ${isFormOpen && styles.formVisibleText}`}>
+                <RatingForm  isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen}/>
+              </div>
+              
+            </div>
+            
+              </>
+            ) : (
+            <>
+              <div className={`${styles.wrapper} ${!isFormOpen ? styles.ratingVisible : styles.formVisible}`}>
+                <div className={`${styles.rateInfo} ${isFormOpen && styles.hideRatingsText}`}>
+                {!isFormOpen && 
+                  <button className={styles.openFormBtnAdd} onClick={() => setIsFormOpen(!isFormOpen)}>
+                    <span className={styles.btnText}>Add to QuietSpace</span>
+                  </button>}
+                </div>
+                {isFormOpen && 
+                  <div className={`${styles.formInfo} ${isFormOpen && styles.formVisibleText}`}>
+                    <RatingForm  isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen}/>
+                  </div>}             
               </div>
             </>
-        )}
+          )}
         </>
       ) : (
         <>
           {activePoi.is_quiet_space ? (
+            <>
             <div className={styles.rateInfo}>
               <div className={styles.rateWrapper}> <span>Wifi:</span><StarRating rating={activePoi.wifi_rating}/></div>   
               <div className={styles.rateWrapper}> <span>Quiet:</span><StarRating rating={activePoi.noise_level_rating}/></div>    
               <div className={styles.rateWrapper}> <span>Seating Comfort:</span><StarRating rating={activePoi.seating_comfort_rating}/></div>    
               <div className={styles.rateWrapperC}> <span>Charging Accessibility:</span><StarRating rating={activePoi.charging_accessibility_rating}/></div>    
-              <NavLink className={styles.loginBtn} href={"/login"}><span className={styles.btnText}>Login to rate your experience</span></NavLink>              
             </div>
+            <NavLink className={styles.loginBtn} href={"/login"}><span className={styles.btnText}>Login to rate your experience</span></NavLink>              
+            </>
           ) : (
             <>
-              <NavLink className={styles.loginBtn} href={"/login"}><span className={styles.btnText}>Login to add to QuietSpace</span></NavLink>              
+              <NavLink className={styles.loginBtnNotQuietSpace} href={"/login"}><span className={styles.btnText}>Login to add to QuietSpace</span></NavLink>              
             </>
         )}
         </>

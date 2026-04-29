@@ -5,10 +5,11 @@ import { usePois } from "@/contexts/PoisContext";
 import styles from "./RatingForm.module.css"
 
 
-  export default function RatingForm ({ setIsFormOpen }) {
+  export default function RatingForm ({ isFormOpen, setIsFormOpen }) {
 
+  
   const [loading, setLoading] = useState(false);
-  const { activePoi, setActivePoi,cachedPois, setCachedPois } = usePois();
+  const { activePoi, setActivePoi, setCachedPois } = usePois();
   const [ratings, setRatings] = useState({
     wifi: "",
     noise_level: "",
@@ -66,28 +67,33 @@ import styles from "./RatingForm.module.css"
   return (
     <form className={styles.ratingForm} onSubmit={insertData}>
       <div className={styles.fieldDiv}>
-        <label>Wifi Rating:</label>
+        <label>Wifi:</label>
         <input name="wifi" type="number" value={ratings.wifi} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
-        <label>Noise Level Rating::</label>
+        <label>Noise Level:</label>
         <input name="noise_level" type="number" value={ratings.noise_level} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
-        <label>Seating Comfort Rating:</label>
+        <label>Seating Comfort:</label>
         <input name="seating_comfort" type="number" value={ratings.seating_comfort} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
-        <label>Charging Accessibility Rating:</label>
+        <label>Charging Accessibility:</label>
         <input name="charging_accessibility" type="number" value={ratings.charging_accessibility} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
       <div className={styles.fieldDiv}>
         <label>{ratings.comment.length} / 200 Characters</label>
         <textarea name="comment" value={ratings.comment} onChange={handleChange} maxLength={200} placeholder="Tell us more..." />
       </div>
-      <button type="Submit" disabled={loading} className={styles.submitBtn}>
-        {loading ? "Saving..." : "Submit Rating"}
-      </button>
+      <div className={styles.btnsWrapper}>
+        <button type="Submit" disabled={loading} className={styles.btnText}>
+          {loading ? "Saving..." : "Submit Rating"}
+        </button>
+        <button type="button" className={styles.closeFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
+           <span className={styles.btnText } >Close</span>
+        </button>
+      </div>
       </form>
   )
 
