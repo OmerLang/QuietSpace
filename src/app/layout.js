@@ -18,13 +18,19 @@ const roboto = Roboto({
 export const metadata = {
   title: "QuietSpace",
   description: "Find your quiet spot.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover", // Essential for PWA/Mobile notches
-  },
+  manifest: "/manifest.json",
+  icons: {
+    apple: "icons/icon-192.png"
+  }
+};
+
+export const viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
 };
 
 

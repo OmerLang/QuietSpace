@@ -4,21 +4,20 @@ import styles from "./starRating.module.css"
 
 export default function StarRating({ rating }) {
 
-  const starsArr = Array(5).fill(0);
-  for (let i = 0; i < rating; i++)
-    starsArr[i] = 1;
+  // const starsArr = Array(5).fill(0);
+  // for (let i = 0; i < rating; i++)
+  //   starsArr[i] = 1;
 
 
   return (
     <div className={styles.starsWrapper}>
-      {starsArr.map((item, index) => (
+      {/* {starsArr.map((item, index) => ( */}
         <svg
           className={styles.star}
-          key={index}
-          width={'27px'}
-          height={'27px'}
+          width={'20px'}
+          height={'20px'}
           viewBox="0 0 24 24"
-          fill={item === 1 ? '#fefe68' : 'none'}
+          fill={'#ffcb30'}
           xmlns="http://www.w3.org/2000/svg"
           stroke="#ffffff"
         >
@@ -41,9 +40,6 @@ export default function StarRating({ rating }) {
             ></path>{" "}
           </g>
         </svg>
-        )
-      )}
-        
     </div>
   );
 }

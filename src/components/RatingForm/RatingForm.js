@@ -37,7 +37,6 @@ import styles from "./RatingForm.module.css"
           const { lat, lng, ...rest } = response.updatedPoi;
           const updatedPoi = {
             ...rest,
-            is_suitable: true,
             location: {
               lat,
               lng
@@ -82,13 +81,13 @@ import styles from "./RatingForm.module.css"
         <label>Charging Accessibility:</label>
         <input name="charging_accessibility" type="number" value={ratings.charging_accessibility} onChange={handleChange} required min="1" max="5" placeholder="1-5"/>
       </div>
-      <div className={styles.fieldDiv}>
-        <label>{ratings.comment.length} / 200 Characters</label>
+      <div className={styles.fieldDivText}>
         <textarea name="comment" value={ratings.comment} onChange={handleChange} maxLength={200} placeholder="Tell us more..." />
+        <label>{ratings.comment.length} / 200</label>
       </div>
       <div className={styles.btnsWrapper}>
-        <button type="Submit" disabled={loading} className={styles.btnText}>
-          {loading ? "Saving..." : "Submit Rating"}
+        <button type="Submit" disabled={loading}>
+          <span className={styles.btnText}>{loading ? "Saving..." : "Submit Rating"}</span>
         </button>
         <button type="button" className={styles.closeFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
            <span className={styles.btnText } >Close</span>

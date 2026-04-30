@@ -12,6 +12,31 @@
  padding-left: 8px;
 }
 
+.fieldDivText {
+  display: flex;
+  padding-left: 8px;
+  gap: 8px;
+}
+
+.fieldDivText textarea {
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding-left: 6px;
+  padding-top: 4px;
+  max-width: 150px;
+}
+
+textarea::placeholder {
+  font-size: 0.8rem;
+}
+
+.fieldDivText label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .btnsWrapper {
   display: flex;
   justify-content: center;
@@ -22,7 +47,7 @@
 }
 
 .btnText {
-  font-size: 1em;
+  font-size: 0.8em;
   padding: 6px 14px;
   border-radius: 12px;
   background: #ffffff;

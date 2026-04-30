@@ -28,7 +28,7 @@ export async function isTypePlace(placeId) {
     return {
       google_place_id: data[0].google_place_id,
       is_quiet_space: data[0].is_quiet_space,
-      is_suitable: true,
+      is_suitable: data[0].is_suitable,
       location: {
         lat: data[0].lat,
         lng: data[0].lng
