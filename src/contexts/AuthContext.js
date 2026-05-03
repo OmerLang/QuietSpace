@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       return console.log("error logging out")
     }
   }
-
+  
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();

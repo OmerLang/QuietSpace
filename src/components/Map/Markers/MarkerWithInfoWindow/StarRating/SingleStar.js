@@ -1,4 +1,4 @@
-import styles from "./starRating.module.css"
+import styles from "./SingleStar.module.css"
 
 
 
