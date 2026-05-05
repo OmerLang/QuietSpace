@@ -12,35 +12,37 @@ export const PoisProvider = ({ children }) => {
   const { user } = useAuth();
   const [activePoi, setActivePoi] = useState(null);
   const [cachedPois, setCachedPois] = useState([]);
-  const [ratedPoisIds, setRatedPoisIds] = useState(new Set());
+  const [ratedPois, setRatedPois] = useState(new Map());
   
 
 
   useEffect(() => {
     const fetchData = async () => {
       if (!user) {
-        setRatedPoisIds(new Set());
+        setRatedPois(new Map());
         return;
       }
       const { data, error } = await supabase
       .from('ratings')
-      .select('google_place_id')
-      .eq('user_id',user.id);
+      .select('*')
+      .eq('user_id',user.id)
 
       if (error)
         return console.log("user ratings fetch error:", error);
 
       if (data) {
-        const idSet = new Set(data.map(item => item.google_place_id))
-        setRatedPoisIds(idSet)
+        console.log("raw data:", data)
+        const idMap = new Map(data.map(item => [item.google_place_id, item]))
+        console.log("idMap:", idMap);
+        setRatedPois(idMap)
       }
     }
     fetchData();
 
-  }, [user])
+  },[user,activePoi])
 
   return (
-    <cachedPoisContext.Provider value={{ activePoi, setActivePoi, cachedPois, setCachedPois, ratedPoisIds, setRatedPoisIds}}>
+    <cachedPoisContext.Provider value={{ activePoi, setActivePoi, cachedPois, setCachedPois, ratedPois, setRatedPois}}>
       {children}
     </cachedPoisContext.Provider>
   )

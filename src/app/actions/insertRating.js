@@ -24,11 +24,11 @@ export default async function insertRating(activePoi, formData){
   if (error || !user)
     return { passed: false, error: error?.message };
   const google_place_id = activePoi.google_place_id;
-  const { wifi, noise_level, seating_comfort, charging_accessibility, comment } = formData;
-  const wifiCheck = inputCheck("wifi", wifi);
-  const noise_levelCheck = inputCheck("noise_level", noise_level);
-  const seating_comfortCheck = inputCheck("seating_comfort", seating_comfort);
-  const charging_accessibilityCheck = inputCheck("charging_accessibility", charging_accessibility);
+  const { wifi_rating, noise_level_rating, seating_comfort_rating, charging_accessibility_rating, comment } = formData;
+  const wifiCheck = inputCheck("wifi", wifi_rating);
+  const noise_levelCheck = inputCheck("noise_level", noise_level_rating);
+  const seating_comfortCheck = inputCheck("seating_comfort", seating_comfort_rating);
+  const charging_accessibilityCheck = inputCheck("charging_accessibility", charging_accessibility_rating);
   const commentCheck = characterLimitCheck(comment);
   if (!wifiCheck.passed)
     return wifiCheck
@@ -49,15 +49,19 @@ export default async function insertRating(activePoi, formData){
   }
   const { error : ratingInsertError } = await supabase
     .from('ratings')
-    .insert({
+    .upsert({
       google_place_id: google_place_id,
       user_id: user.id,
-      wifi_rating: Number(wifi),
-      noise_level_rating: Number(noise_level),
-      seating_comfort_rating: Number(seating_comfort), 
-      charging_accessibility_rating: Number(charging_accessibility),
+      wifi_rating: Number(wifi_rating),
+      noise_level_rating: Number(noise_level_rating),
+      seating_comfort_rating: Number(seating_comfort_rating), 
+      charging_accessibility_rating: Number(charging_accessibility_rating),
       comment: comment 
-    }); 
+      },
+      {
+      onConflict: 'user_id, google_place_id'
+      }
+    ); 
     if (ratingInsertError)
       return { passed: false, error: `Failed inserting to ratings table, - ${ratingInsertError.message}`} 
     const { data: updatedPoi, error: fetchError } = await supabase.rpc('get_poi_by_placeid', { placeid: google_place_id })

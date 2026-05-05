@@ -1,33 +1,25 @@
 'use client';
 import { useAuth } from "@/contexts/AuthContext";
 import styles from './PoiInfoWindow.module.css'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RatingForm from "@/components/RatingForm/RatingForm";
 import { usePois } from "@/contexts/PoisContext";
 import NavLink from "@/components/Navigation/NavLink/NavLink";
-import Login from "@/app/login/page";
 import SingleStar from "../MarkerWithInfoWindow/StarRating/SingleStar";
 
 
 export default function PoiInfoWindow () {
 
 
-  const { activePoi, ratedPoisIds } = usePois();
-  const [userRatedPoi, setUserRatedPoi] = useState(false);
-  const { user, loading } = useAuth();
+  const { activePoi, ratedPois } = usePois();
+  const { user } = useAuth();
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const fallbackImage = "/images/fallback.jpg";
   const imageSource = activePoi.photo_url || fallbackImage;
   
-  const checkIfAlreadyRated = () => {
-    const rated = ratedPoisIds.has(activePoi.google_place_id)
-    setUserRatedPoi(rated);
-  }
-
-  useEffect(() => {
-    checkIfAlreadyRated();
-  },[ratedPoisIds])
+  const existingRating = (ratedPois.get(activePoi?.google_place_id));
+    
 
   return (
       <div className={styles.popupWindow} key={activePoi.google_place_id}>
@@ -55,14 +47,13 @@ export default function PoiInfoWindow () {
                     <div className={styles.scoreStar}><span className={styles.score}>{activePoi.charging_accessibility_rating}</span><SingleStar rating={activePoi.charging_accessibility_rating}/></div>
                   </div>  
                 </div>
-                  {!isFormOpen && !userRatedPoi ? (
+                  {!isFormOpen &&
                   <button className={styles.openFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
-                    <span className={styles.btnText }>Rate your experience</span>
-                  </button>
-                  ) : <span className={styles.alreadyRatedText}>You already rated this place!</span>}  
+                    <span className={styles.btnText }>{!existingRating?.google_place_id ? 'Rate your experience' : 'Edit your rating'} </span>
+                  </button>}
               </div>
               <div className={`${styles.formInfo} ${isFormOpen && styles.formVisibleText}`}>
-                <RatingForm  isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen}/>
+                <RatingForm  key={activePoi.google_place_id} isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} existingRating={existingRating}/>
               </div>
               
             </div>

@@ -43,12 +43,12 @@ export default function RootLayout({ children }) {
             <LocationProvider>
               <MobileDetector/>
                 <PoisProvider>
-                <Navbar></Navbar>
-                <main className="mainContent">
-                  <MapWrapper>
-                    {children}
-                  </MapWrapper>
-                </main>
+                  <Navbar></Navbar>
+                  <main className="mainContent">
+                    <MapWrapper>
+                      {children}
+                    </MapWrapper>
+                  </main>
               </PoisProvider>
             </LocationProvider>
           </AuthProvider>

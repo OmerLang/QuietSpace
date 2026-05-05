@@ -33,7 +33,7 @@ export default function StarsForm({ ratings, setRatings, inputName }) {
             width={'20px'}
             height={'20px'}
             viewBox="0 0 24 24"
-            fill={(hover || ratings[inputName]) >=  index + 1 ? '#ffcb30' : '#ffffff'}
+            fill={(hover || Number(ratings[inputName])) >=  index + 1 ? '#ffcb30' : '#ffffff'}
             xmlns="http://www.w3.org/2000/svg"
             stroke="#ffffff"
           >

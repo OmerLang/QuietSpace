@@ -2,59 +2,43 @@
 import NavLink from '@/components/Navigation/NavLink/NavLink';
 import NavAuthButton from '@/components/Navigation/NavAuthButton/NavAuthButton';
 import { useAuth } from '@/contexts/AuthContext';
-import { useIsMobile } from '@/hooks/useIsMobile';
 import styles from './Navbar.module.css';
 import { useEffect, useState } from 'react';
+import { usePois } from '@/contexts/PoisContext';
 
 
 export default function Navbar() {
   const { user, loading } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
-  const [disableTransition, setDisableTransition] = useState(false);
-  const isMobile = useIsMobile((state) => state.isMobile)
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const closeMenu = () => setIsOpen(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  useEffect(() => {
-    setIsOpen(false);
-    setDisableTransition(true)
-
-    const time = setTimeout(() => {
-      setDisableTransition(false)
-    },50);
-    return () => clearTimeout(time);
-  },[isMobile]);
-
-  if (loading) return null;
 
   return (
-    <nav className={styles.outerContainer}>
-      <div className={styles.innerContainer}>
-        <NavLink className={styles.logo} href="/">QuiteSpace</NavLink>
-        {isMobile && (
-          <button type='button' className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ""}`} onClick={toggleMenu}>
-            <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
-            <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
-            <span className={`${styles.bar} ${isOpen ? styles.barOpen : ""}`}></span>
-          </button>
-        )}
-        {isMobile && <div className={`${isOpen ? styles.overlay : ""}`} onClick={isOpen ? toggleMenu : null}></div>}
-        <div className={`${styles.navLinks} ${isOpen ? styles.navLinksActive : ""} ${disableTransition ? styles.noTransition : ""}`}>
-          <NavAuthButton className={`${isOpen && styles.link}`} onClick={closeMenu}></NavAuthButton>
-          {user ? (
-            <>
-            <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/dashboard">Dashboard</NavLink>
-            <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/settings">Settings</NavLink>
-            <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/favorites">Favorites</NavLink>
-            </>
-          ) : (
-            <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/signup">Sign-Up</NavLink>
-          )}
-          <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/about">About Us</NavLink>
-          <NavLink className={isOpen ? styles.link : ""} onClick={closeMenu} href="/contact">Contact</NavLink>
+      <div className={styles.container}>
+        <button
+          onClick={toggleMenu}
+          className={styles.menuBtn}>
+          <span className={isMenuOpen ? styles.firstLine : ""}></span>
+          <span className={isMenuOpen ? styles.middleLine : ""}></span>
+          <span className={isMenuOpen ? styles.thirdLine : ""}></span>
+        </button>
+        <div className={`${styles.innerContainer} ${isMenuOpen ? styles.show : styles.hide}`}>
+          <NavLink
+            href="/about"
+            className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
+            About
+          </NavLink>
+          <NavAuthButton
+          onClick={toggleMenu}
+          className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}        
+          />
+          <NavLink
+            href={user ? "/profile" : "/signup"}
+            className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
+            {user ? "Profile" : "Signup"}
+          </NavLink>
         </div>
       </div>
-    </nav>
   )
 }

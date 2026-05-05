@@ -1,28 +1,44 @@
 'use client'
 import insertRating from "@/app/actions/insertRating";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePois } from "@/contexts/PoisContext";
 import styles from "./RatingForm.module.css"
 import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
 
-  export default function RatingForm ({ isFormOpen, setIsFormOpen }) {
+  export default function RatingForm ({ isFormOpen, setIsFormOpen, existingRating }) {
 
   
   const [loading, setLoading] = useState(false);
-  const { activePoi, setActivePoi, setCachedPois,ratedPoisIds, setRatedPoisIds } = usePois();
+  const { activePoi, setActivePoi, setCachedPois, setRatedPois } = usePois();
   const [filled, setIsFilled] = useState(true);
   const [activetimer, setActiveTimer] = useState(false);
   const [rateSuccess, setRateSuccess] = useState('idle');
-  const [ratings, setRatings] = useState({
-    wifi: 0,
-    noise_level: 0,
-    seating_comfort: 0,
-    charging_accessibility: 0,
+  const [ratings, setRatings] = useState(existingRating || {
+    wifi_rating: 0,
+    noise_level_rating: 0,
+    seating_comfort_rating: 0,
+    charging_accessibility_rating: 0,
     comment: ""
   });
 
+  useEffect(() => {
+    if (existingRating && existingRating.google_place_id){
+      setRatings(existingRating)
+    }
+    else {
+      setRatings({
+        wifi_rating: 0,
+        noise_level_rating: 0,
+        seating_comfort_rating: 0,
+        charging_accessibility_rating: 0,
+        comment: ""
+      })
+    }
+  },[activePoi, existingRating])
+
+
   const validateFill = () => {
-    const isAllFilled = (ratings.noise_level >= 1 && ratings.wifi >= 1 && ratings.seating_comfort >= 1 && ratings.charging_accessibility >= 1) 
+    const isAllFilled = (ratings.noise_level_rating >= 1 && ratings.wifi_rating >= 1 && ratings.seating_comfort_rating >= 1 && ratings.charging_accessibility_rating >= 1) 
     if (!isAllFilled) {
       setIsFilled(false)
       setActiveTimer(true)
@@ -52,7 +68,11 @@ import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
         setRateSuccess('error');
       } else {
         setRateSuccess('success');
-        setRatedPoisIds(prev => new Set(prev).add(response.updatedPoi.google_place_id));
+        setRatedPois((prev) => {
+          const updatedMap = new Map(prev);
+          updatedMap.set(response.updatedPoi.google_place_id, response.updatedPoi)
+          return updatedMap;
+        })
           const { lat, lng, ...rest } = response.updatedPoi;
           const updatedPoi = {
             ...rest,
@@ -61,7 +81,6 @@ import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
               lng
             }
           }
-          console.log("updatedPOI:", updatedPoi)
           setActivePoi((prev) =>
             ({ ...prev, ...updatedPoi })
           );
@@ -70,7 +89,7 @@ import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
               poi.google_place_id === updatedPoi.google_place_id ? updatedPoi  : poi
             )
           );
-          setRatings({wifi: "",noise_level: "", seating_comfort: "", charging_accessibility: "", comment: ""});   
+          setRatings({wifi_rating: 0,noise_level_rating: 0, seating_comfort_rating: 0, charging_accessibility_rating: 0, comment: ""});   
           setTimeout(() => {
             setIsFormOpen(false)},2000)
         }
@@ -88,27 +107,27 @@ import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
        <div className={styles.formGrid}> 
         <div className={styles.fieldDiv}>
           <label>Quiet</label>
-          <div className={`${styles.popup} ${!filled && activetimer && (ratings.noise_level < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
-          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"noise_level"}/>
+          <div className={`${styles.popup} ${!filled && activetimer && (ratings.noise_level_rating < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
+          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"noise_level_rating"}/>
         </div>
         <div className={styles.fieldDiv}>
           <label>Wifi</label>
-          <div className={`${styles.popup} ${!filled && activetimer && (ratings.wifi < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
-          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"wifi"}/>
+          <div className={`${styles.popup} ${!filled && activetimer && (ratings.wifi_rating < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
+          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"wifi_rating"}/>
         </div>
         <div className={styles.fieldDiv}>
           <label>Seating Comfort</label>
-          <div className={`${styles.popup} ${!filled && activetimer && (ratings.seating_comfort < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>                
-          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"seating_comfort"}/>
+          <div className={`${styles.popup} ${!filled && activetimer && (ratings.seating_comfort_rating < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>                
+          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"seating_comfort_rating"}/>
         </div>
         <div className={styles.fieldDiv}>
           <label>Charging Accessibility</label>
-          <div className={`${styles.popup} ${!filled && activetimer && (ratings.charging_accessibility < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
-          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"charging_accessibility"}/>
+          <div className={`${styles.popup} ${!filled && activetimer && (ratings.charging_accessibility_rating < 1) ? styles.showPopup : ""}`}><span className={styles.popupTextRed}>Must be filled</span></div>
+          <StarsForm ratings={ratings} setRatings={setRatings} inputName={"charging_accessibility_rating"}/>
         </div>
         <div className={styles.fieldDivText}>
           <textarea name="comment" value={ratings.comment} onChange={handleChange} maxLength={200} placeholder="Tell us more..." />
-          <label>{ratings.comment.length} / 200</label>
+          <label>{(ratings.comment || "").length} / 200</label>
         </div>
       </div>
       <div className={`${styles.popup} ${(rateSuccess === 'error' || rateSuccess === 'success') ? styles.showPopup : ""}`}>
