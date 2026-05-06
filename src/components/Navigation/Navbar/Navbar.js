@@ -14,7 +14,7 @@ export default function Navbar() {
 
 
   return (
-      <div className={styles.container}>
+        <div className={styles.container}>
         <button
           onClick={toggleMenu}
           className={styles.menuBtn}>
@@ -22,7 +22,7 @@ export default function Navbar() {
           <span className={isMenuOpen ? styles.middleLine : ""}></span>
           <span className={isMenuOpen ? styles.thirdLine : ""}></span>
         </button>
-        <div className={`${styles.innerContainer} ${isMenuOpen ? styles.show : styles.hide}`}>
+        <div className={`${styles.innerContainer} ${isMenuOpen ? styles.show : ""}`}>
           <NavLink
             href="/about"
             className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
