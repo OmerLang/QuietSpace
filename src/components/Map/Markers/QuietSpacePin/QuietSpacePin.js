@@ -9,9 +9,9 @@ export default function QuietSpacePin ({ total_rating, google_place_id }) {
   const color = total_rating < 1.7 ? 'low' : total_rating < 3.4 ? 'medium' : 'high';
 
   const colors = {
-    high: '#10B981',
-    medium: '#FBBF24',
-    low: '#EF4444',
+    high: '#10b981b7',
+    medium: '#fbbe24b7',
+    low: '#ef4444b7',
   }
 
   return (

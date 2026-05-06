@@ -4,8 +4,8 @@ import { Roboto } from 'next/font/google';
 import styles from './layout.module.css';
 import MapWrapper from "@/components/Map/MapWrapper";
 import { LocationProvider } from "@/contexts/LocationContext";
-import MobileDetector from "@/components/MobileDetector/MobileDetector";
 import { PoisProvider } from "@/contexts/PoisContext";
+import { MenuProvider } from "@/contexts/MenuContext";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
         <div className={styles.mainLayout}>
           <AuthProvider>
             <LocationProvider>
-              <MobileDetector/>
+              <MenuProvider>
                 <PoisProvider>
                   <Navbar></Navbar>
                   <main className="mainContent">
@@ -49,7 +49,8 @@ export default function RootLayout({ children }) {
                       {children}
                     </MapWrapper>
                   </main>
-              </PoisProvider>
+                </PoisProvider>
+              </MenuProvider>
             </LocationProvider>
           </AuthProvider>
         </div>

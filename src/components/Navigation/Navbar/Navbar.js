@@ -3,13 +3,12 @@ import NavLink from '@/components/Navigation/NavLink/NavLink';
 import NavAuthButton from '@/components/Navigation/NavAuthButton/NavAuthButton';
 import { useAuth } from '@/contexts/AuthContext';
 import styles from './Navbar.module.css';
-import { useEffect, useState } from 'react';
-import { usePois } from '@/contexts/PoisContext';
+import { useMenu } from '@/contexts/MenuContext';
 
 
 export default function Navbar() {
   const { user, loading } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isMenuOpen, setIsMenuOpen } = useMenu();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -29,10 +28,12 @@ export default function Navbar() {
             className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
             About
           </NavLink>
+          <span className={styles.spacer}></span>
           <NavAuthButton
           onClick={toggleMenu}
           className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}        
           />
+          <span className={styles.spacer}></span>
           <NavLink
             href={user ? "/profile" : "/signup"}
             className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>

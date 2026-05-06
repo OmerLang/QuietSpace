@@ -6,6 +6,7 @@ import { fetchPoiCache, getQuietSpacesByZoom } from "@/app/actions/fetchPoiCache
 import { usePois } from "@/contexts/PoisContext";
 import MarkerWithInfoWindow from "./Markers/MarkerWithInfoWindow/MarkerWithInfoWindow";
 import { useEffect, useCallback } from "react";
+import { useMenu } from "@/contexts/MenuContext";
 
 
 
@@ -14,6 +15,7 @@ export default function MapInstance({ id, children, ...props }){
   const location = useLocation();
   const map = useMap(id);
   const { setActivePoi, cachedPois, setCachedPois } = usePois();
+  const { setIsMenuOpen } = useMenu();
 
   const handleIdle = useCallback(async () => {
     if(!map) return;
@@ -85,10 +87,11 @@ useEffect(() => {
     map.setZoom(15);
   },[map, location])
 
+
   const onGooglePoiClick = useCallback(async (event) => {
     event.stop();
+    setIsMenuOpen(false);
     const { detail } = event;
-    console.log("DETAILS:", detail)
     if (!detail.placeId) {
       return setActivePoi(null)
     }
@@ -131,6 +134,7 @@ useEffect(() => {
       defaultZoom={11}
       minZoom={3}
       onIdle={handleIdle}
+      onDrag={() => setIsMenuOpen(false)}
       restriction={{
       latLngBounds: {north: 33.8, south: 29, west: 33.5, east: 36.2},
       strictBounds: true,

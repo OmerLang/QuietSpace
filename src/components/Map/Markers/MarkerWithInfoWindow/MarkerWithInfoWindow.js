@@ -4,16 +4,18 @@ import { memo, useEffect, useState } from "react";
 import PoiInfoWindow from "../PoiInfoWindow/PoiInfoWindow";
 import QuietSpacePin from "../QuietSpacePin/QuietSpacePin";
 import { usePois } from "@/contexts/PoisContext";
-
+import { useMenu } from "@/contexts/MenuContext";
 
 const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow() {
   const map = useMap();
   const [zoom, setZoom] = useState(12);
   const [activeMarkerRef, activeMarker] = useAdvancedMarkerRef();
   const { activePoi, setActivePoi, cachedPois, } = usePois();
+  const { setIsMenuOpen } = useMenu();
   
   const setAsActive = (poi) => {
     setActivePoi(poi)
+    setIsMenuOpen(false);
   }
 
   useEffect (() => {
@@ -33,6 +35,7 @@ const MarkerWithInfoWindow = memo(function MarkerWithInfoWindow() {
         key={poi.google_place_id}
         onClick={() => setAsActive(poi)}
         position = { poi.location }
+        padding={{ top: 100, bottom: 0, left: 0, right: 0 }}
         zIndex={1000}
         ref={poi.google_place_id === activePoi?.google_place_id ? activeMarkerRef : null}>
         {poi.is_quiet_space && zoom >=12 && <QuietSpacePin total_rating={poi.total_rating} google_place_id={poi.google_place_id}/>}
