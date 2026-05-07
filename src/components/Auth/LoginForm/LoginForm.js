@@ -20,6 +20,7 @@ export default function LoginForm() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error){
       console.error("Login failed:", error.message); 
+      setLoading(false);
       alert(error.message);
       return;
     }
@@ -47,7 +48,7 @@ export default function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button className={styles.submitBtn} type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+      <button className={styles.submitBtn} type="submit" disabled={loading}><span className={styles.submitBtnText}>{loading ? "Logging in..." : "Login"}</span></button>
     </form>
   );
 }
