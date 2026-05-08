@@ -4,31 +4,35 @@
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(190, 190, 190);
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
+  border-radius: inherit;
   corner-shape: round;
-  gap: 10px;
-  padding: 2em 1em 1em 1em;
+  gap: 1em;
+  align-items: stretch;
+  padding: 2.5em 1em 1em 1em;
 }
 
 .loginTitle h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: 2rem;
+  letter-spacing: -0.03em;
+  font-size: 2.2rem;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-font-smoothing: antialiased;
-  
+  color: #374151;
 }
 
 
 .closeBtn {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 20px;
+  right: 20px;
   width: 20px;
   height: 20px;
 }

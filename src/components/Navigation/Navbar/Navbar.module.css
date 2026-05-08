@@ -4,11 +4,10 @@
   left: 30px;
   z-index: 2;
   display: flex;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 12px;
   height: 50px;
   border: 1px solid rgba(131, 130, 130, 0.3);
-  backdrop-filter: blur(5px);
   transform-origin: left;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
   animation: strech 1s linear;
@@ -109,8 +108,8 @@
 
 .loginPopupPos {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
+  border-radius: 30px;
+  width: 300px;
   z-index: 5;
   top: 50%;
   left: 50%;
@@ -128,7 +127,7 @@
 }
 
 .hidePopup {
-  animation: slideOutToLeft 0.1s linear forwards;
+  animation: slideOutToLeft 0.2s linear forwards;
  
 }
 

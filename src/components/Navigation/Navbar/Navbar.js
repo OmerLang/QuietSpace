@@ -20,35 +20,35 @@ export default function Navbar() {
 
   return (
     <>
-        <div className={styles.navbarContainer}>
-          <button
-            onClick={toggleMenu}
-            className={styles.menuBtn}>
-            <span className={isMenuOpen ? styles.firstLine : ""}></span>
-            <span className={isMenuOpen ? styles.middleLine : ""}></span>
-            <span className={isMenuOpen ? styles.thirdLine : ""}></span>
-          </button>
-          <div className={`${styles.innerContainer} ${isMenuOpen ? styles.show : ""}`}>
-            <NavLink
-              href="/about"
-              className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
-              <span className={styles.btnText}>About</span>
-            </NavLink>
-            <span className={styles.spacer}></span>
-            <NavAuthButton
-              onClick={toggleLoginPopup}
-              className={`${styles.button} ${isMenuOpen && styles.buttonShow}`} 
-              textClassName={styles.btnText}       
-            />
-            <span className={styles.spacer}></span>
-            <NavLink
-              href={user ? "/profile" : "/signup"}
-              className={`${styles.button} ${isMenuOpen && styles.buttonShow}`}>
-              <span className={styles.btnText}>{user ? "Profile" : "Signup"}</span>
-            </NavLink>
-          </div>
+      <div className={styles.navbarContainer}>
+        <button
+          onClick={toggleMenu}
+          className={styles.menuBtn}>
+          <span className={isMenuOpen ? styles.firstLine : ""}></span>
+          <span className={isMenuOpen ? styles.middleLine : ""}></span>
+          <span className={isMenuOpen ? styles.thirdLine : ""}></span>
+        </button>
+        <div className={`${styles.innerContainer} ${isMenuOpen ? styles.show : ""}`}>
+          <NavLink
+            href="/about"
+            className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}>
+            <span className={styles.btnText}>About</span>
+          </NavLink>
+          <span className={styles.spacer}></span>
+          <NavAuthButton
+            onClick={toggleLoginPopup}
+            className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`} 
+            textClassName={styles.btnText}       
+          />
+          <span className={styles.spacer}></span>
+          <NavLink
+            href={user ? "/profile" : "/signup"}
+            className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}>
+            <span className={styles.btnText}>{user ? "Profile" : "Signup"}</span>
+          </NavLink>
+        </div>
       </div>
-      <div onClick={toggleLoginPopup} className={isLoginPopupOpen && styles.overlay}>
+      <div onClick={toggleLoginPopup} className={isLoginPopupOpen ? styles.overlay : ""}>
       </div>
       <div className={`${styles.loginPopupPos} ${isLoginPopupOpen ? styles.showPopup : styles.hidePopup}`}>
           <LoginPopup/>
