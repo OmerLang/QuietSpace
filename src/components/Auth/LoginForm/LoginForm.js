@@ -1,54 +1,69 @@
 "use client";
-import { useState } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation"
 import styles from "./LoginForm.module.css";
+import { loginVaildation } from "@/../lib/validations/authSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { handleLogin } from "@/app/actions/auth";
+import { useRouter } from "next/navigation";
+import { useMenu } from "@/contexts/MenuContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const supabase = createClient();
-  const router = useRouter();
+const router = useRouter();
+const { isLoginPopupOpen, setIsLoginPopupOpen } = useMenu();
+const { refreshAuth } = useAuth();
 
-  const loginSubmit = async (e) => {
-    if (loading)
-      return;
-    e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error){
-      console.error("Login failed:", error.message); 
-      setLoading(false);
-      alert(error.message);
-      return;
+
+const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginVaildation),
+    defaultValues: {
+      email: "",
+      password:""
+    },
+  });
+
+  const login = async (data) => {
+    const response = await handleLogin(data);
+    if (!response.success) {
+      if (response.message){
+        setError("password", { type: "server", message: response.message })
+        return
+      }
     }
-    router.push("/");
-  };
+    console.log("im here nowwwwwwwwwww")
+    await refreshAuth();
+    setIsLoginPopupOpen(false);
+
+  }
+
+
+
 
   return (
-    <form onSubmit={loginSubmit} className={styles.loginForm}>
+    <form onSubmit={handleSubmit(login)} className={styles.loginForm}>
       <div className={styles.fieldDiv}>
         <label htmlFor="email">Email</label>
         <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
         />
+         <p>{errors.email && errors.email.message}</p>
       </div>
 
       <div className={styles.fieldDiv}>
-        <label htmlFor="password">Password</label>
+        <label>Password</label>
         <input
-          id="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register("password")}
         />
+        <p>{errors.password && errors.password.message}</p>
       </div>
-      <button className={styles.submitBtn} type="submit" disabled={loading}><span className={styles.submitBtnText}>{loading ? "Logging in..." : "Login"}</span></button>
+      <button className={styles.submitBtn} type="submit" disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? "Logging in..." : "Login"}</span></button>
     </form>
   );
 }

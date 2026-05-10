@@ -1,7 +1,7 @@
 .navbarContainer {
   position: absolute;
   top: 30px;
-  left: 30px;
+  left: 9%;
   z-index: 2;
   display: flex;
   background-color: rgba(255, 255, 255, 1);
@@ -117,13 +117,24 @@
   transition: transform 0.2s ease-out;
 }
 
+.signupPopupPos {
+  position: absolute;
+  border-radius: 30px;
+  width: 300px;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(150vw, -50%);
+  transition: transform 0.2s ease-out;
+}
+
 .showPopup {
   animation: slideInFromRight 0.2s forwards;
 }
 
 @keyframes slideInFromRight {
-  from { transform: translate(150vw, -50%) scale(0); }
-  to { transform: translate(-50%, -50%) scale(1); }
+  from { transform: translate(150vw, -50%); }
+  to { transform: translate(-50%, -50%); }
 }
 
 .hidePopup {
@@ -132,6 +143,6 @@
 }
 
 @keyframes slideOutToLeft {
-  from { transform:  translate(-50%, -50%) scale(1); }
-  to { transform: translate(-150vw, -50%) scale(0); }
+  from { transform:  translate(-50%, -50%); }
+  to { transform: translate(-150vw, -50%); }
   }

@@ -5,16 +5,31 @@ import { useAuth } from '@/contexts/AuthContext';
 import styles from './Navbar.module.css';
 import { useMenu } from '@/contexts/MenuContext';
 import LoginPopup from '@/components/LoginPopup/LoginPopup';
+import SignupPopup from '@/components/SignupPopup/SignupPopup';
 
 
 export default function Navbar() {
-  const { user, loading } = useAuth();
-  const { isMenuOpen, setIsMenuOpen, isLoginPopupOpen, setIsLoginPopupOpen } = useMenu();
+  const { user } = useAuth();
+  const { isMenuOpen, setIsMenuOpen, isLoginPopupOpen, setIsLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   const toggleLoginPopup = () => {
     setIsMenuOpen(false);
+    setIsSignupPopupOpen(false)
     setIsLoginPopupOpen(!isLoginPopupOpen)
+  }
+
+  const toggleSignupPopup = () => {
+    setIsMenuOpen(false);
+    setIsLoginPopupOpen(false)
+    setIsSignupPopupOpen(!isSignupPopupOpen)
+  }
+
+  const toggleOverlay = () => {
+    setIsLoginPopupOpen(false)
+    setIsSignupPopupOpen(false)
+    setIsMenuOpen(false)
   }
 
 
@@ -36,22 +51,34 @@ export default function Navbar() {
           </NavLink>
           <span className={styles.spacer}></span>
           <NavAuthButton
-            onClick={toggleLoginPopup}
+            onClick={() => {if(!user) {toggleLoginPopup()} }}
             className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`} 
             textClassName={styles.btnText}       
           />
           <span className={styles.spacer}></span>
-          <NavLink
-            href={user ? "/profile" : "/signup"}
-            className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}>
-            <span className={styles.btnText}>{user ? "Profile" : "Signup"}</span>
-          </NavLink>
+          {user ? (
+            <NavLink
+              href="/profile"
+              className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}>
+              <span className={styles.btnText}>Profile</span>
+            </NavLink>
+          ) : (
+            <button
+            className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
+            onClick={toggleSignupPopup}
+            >
+            <span className={styles.btnText}>Signup</span>
+          </button>
+          )}
         </div>
       </div>
-      <div onClick={toggleLoginPopup} className={isLoginPopupOpen ? styles.overlay : ""}>
+      <div onClick={toggleOverlay} className={isLoginPopupOpen || isSignupPopupOpen ? styles.overlay : ""}>
       </div>
       <div className={`${styles.loginPopupPos} ${isLoginPopupOpen ? styles.showPopup : styles.hidePopup}`}>
-          <LoginPopup/>
+        <LoginPopup/>
+      </div>
+      <div className={`${styles.signupPopupPos} ${isSignupPopupOpen ? styles.showPopup : styles.hidePopup}`}>
+        <SignupPopup/>
       </div>
     </>
   )

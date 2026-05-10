@@ -16,12 +16,8 @@ const roboto = Roboto({
 
 
 export const metadata = {
-  title: "QuietSpace",
-  description: "Find your quiet spot.",
-  manifest: "/manifest.json",
-  icons: {
-    apple: "icons/icon-192.png"
-  }
+  title: "QuiteSpace",
+  manifest: "/manifest.json", // This links the file!
 };
 
 export const viewport = {

@@ -1,82 +1,67 @@
 'use client'
-import { createClient } from "@/utils/supabase/client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import styles from './SignupForm.module.css'
+import styles from './SignupForm.module.css';
+import { signupVaildation } from "@/../lib/validations/authSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { handleSignup } from "@/app/actions/auth";
+import { useMenu } from '@/contexts/MenuContext';
 
 
 export default function SignupForm() {
-  const [values, setValues] = useState({
-    email: '',
-    fullName: '',
-    password: '',
-    phone: '',
-    city: '',
+
+  const { isLoginPopupOpen, setisLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(signupVaildation),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    },
   });
-  const [loading, setLoading] = useState(false);
 
-  const supabase = createClient();
-  const router = useRouter();
-
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const onSignUp = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: values.email,
-      password: values.password,
-      options: {
-        data: {
-          full_name: values.fullName,
-          phone: values.phone,
-          city:values.city
-        }
-      }
-    })
-    if (error) {
-      setLoading(false);
-      return console.log("error:" + error)
+  const signup = async (data) => {
+    const response = await handleSignup(data);
+    if (!response.success) {
+      console.log(response.errors)
+      return 
     }
-    router.push("/login");
+    setIsSignupPopupOpen(false)
+    setisLoginPopupOpen(true)
+    console.log("successfuly signed up")
+    return
   }
+
+  
 
   return (
-    <form onSubmit={onSignUp} className={styles.signupForm}>
+    <form onSubmit={handleSubmit(signup)} className={styles.signupForm}>
       <div className={styles.fieldDiv}>
-        <label>Email:</label>
-        <input name="email" type="email" value={values.email} onChange={handleChange}/>
+        <label>Full Name</label>
+        <input {...register("fullName")}/>
+        {errors.fullName && <p>{errors.fullName.message}</p>}
       </div>
       <div className={styles.fieldDiv}>
-        <label>Full name:</label>
-        <input name="fullName" type="text" value={values.fullName} onChange={handleChange}/>
+        <label>Email</label>
+        <input {...register("email")}/>
+        {errors.email && <p>{errors.email.message}</p>}
       </div>
       <div className={styles.fieldDiv}>
-        <label>Password:</label>
-        <input name="password" type="password" value={values.password} onChange={handleChange}/>
+        <label>Password</label>
+        <input {...register("password")}/>
+        {errors.password && <p>{errors.password.message}</p>}
       </div>
       <div className={styles.fieldDiv}>
-        <label>Phone number:</label>
-        <input name="phone" type="phone" value={values.phone} onChange={handleChange}/>
+        <label>Confirm password</label>
+        <input {...register("confirmPassword")}/>
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
       </div>
-      <div className={styles.fieldDiv}>
-        <label>City:</label>
-        <select name="city" className={styles.citySelect} value={values.city} onChange={handleChange} required>
-          <option value="" disabled>Select a city</option>
-          <option value="Tel Aviv">Tel Aviv</option>
-          <option value="Jerusalem">Jerusalem</option>
-          <option value="Beer Sheva">Beer Sheva</option>
-          <option value="Haifa">Haifa</option>
-          <option value="Rishon LeZion">Rishon LeZion</option>
-          <option value="Ashkelon">Ashkelon</option>
-        </select>
-      </div>
-      <button type="submit" className={styles.submitBtn} disabled={loading}>{loading ? "Loading..." : "Sign-Up"}</button>
+      <button type="submit" className={styles.submitBtn} disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? "Logging in..." : "Signup"}</span></button>
     </form>
   )
 }

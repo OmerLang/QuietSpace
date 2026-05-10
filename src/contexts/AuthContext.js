@@ -19,6 +19,13 @@ export const AuthProvider = ({ children }) => {
       return console.log("error logging out")
     }
   }
+
+  const refreshAuth = async () => {
+  setLoading(true);
+  const { data: { session } } = await supabase.auth.getSession();
+  setUser(session?.user ?? null);
+  setLoading(false);
+  };
   
   useEffect(() => {
     const checkUser = async () => {
@@ -37,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, loading, logout, refreshAuth }}>
       {children}
     </AuthContext.Provider>
   )
