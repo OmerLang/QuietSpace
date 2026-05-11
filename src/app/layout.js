@@ -16,7 +16,7 @@ const roboto = Roboto({
 
 
 export const metadata = {
-  title: "QuiteSpace",
+  title: "QuietSpace",
   manifest: "/manifest.json", // This links the file!
 };
 

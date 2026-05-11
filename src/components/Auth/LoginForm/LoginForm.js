@@ -7,6 +7,7 @@ import { handleLogin } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
 import { useMenu } from "@/contexts/MenuContext";
 import { useAuth } from "@/contexts/AuthContext";
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
 export default function LoginForm() {
 
@@ -36,10 +37,8 @@ const {
         return
       }
     }
-    console.log("im here nowwwwwwwwwww")
     await refreshAuth();
     setIsLoginPopupOpen(false);
-
   }
 
 
@@ -52,7 +51,9 @@ const {
         <input
           {...register("email")}
         />
-         <p>{errors.email && errors.email.message}</p>
+        <div className={`${styles.errorWrapper} ${errors.email ? styles.errorWrapperShow : ""}`}>
+          <p>{errors.email?.message || ""}</p>
+        </div>
       </div>
 
       <div className={styles.fieldDiv}>
@@ -61,9 +62,20 @@ const {
           type="password"
           {...register("password")}
         />
-        <p>{errors.password && errors.password.message}</p>
+        <div className={`${styles.errorWrapper} ${errors.email ? styles.errorWrapperShow : ""}`}>
+          <p>{errors.password?.message || ""}</p>
+        </div>
       </div>
-      <button className={styles.submitBtn} type="submit" disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? "Logging in..." : "Login"}</span></button>
+      <button
+        className={styles.submitBtn}
+        type="submit"
+        disabled={isSubmitting}>
+          <span 
+            className={styles.submitBtnText}
+            >
+            {isSubmitting ? <LoadingSpinner size={30}/> : "Login"}
+          </span>
+        </button>
     </form>
   );
 }

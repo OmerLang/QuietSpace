@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePois } from "@/contexts/PoisContext";
 import styles from "./RatingForm.module.css"
 import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
   export default function RatingForm ({ isFormOpen, setIsFormOpen, existingRating }) {
 
@@ -135,7 +136,7 @@ import StarsForm from "../Map/Markers/MarkerWithInfoWindow/StarsForm/StarsForm";
       </div>
       <div className={styles.btnsWrapper}>
         <button type="Submit" disabled={loading}>
-          <span className={styles.btnText}>{loading ? "Saving..." : "Submit Rating"}</span>
+          <span className={styles.btnText}>{loading ? <LoadingSpinner size={15} color="#54BDFF" /> : "Submit Rating"}</span>
         </button>
         <button type="button" className={styles.closeFormBtn} onClick={() => setIsFormOpen(!isFormOpen)}>
            <span className={styles.btnText } >Close</span>

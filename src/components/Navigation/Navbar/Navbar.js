@@ -75,10 +75,10 @@ export default function Navbar() {
       <div onClick={toggleOverlay} className={isLoginPopupOpen || isSignupPopupOpen ? styles.overlay : ""}>
       </div>
       <div className={`${styles.loginPopupPos} ${isLoginPopupOpen ? styles.showPopup : styles.hidePopup}`}>
-        <LoginPopup/>
+        <LoginPopup key ={isLoginPopupOpen ? "open" : "closed"} />
       </div>
       <div className={`${styles.signupPopupPos} ${isSignupPopupOpen ? styles.showPopup : styles.hidePopup}`}>
-        <SignupPopup/>
+        <SignupPopup key = {isSignupPopupOpen ? "open" : "closed" } />
       </div>
     </>
   )

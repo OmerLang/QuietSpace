@@ -30,6 +30,23 @@
   gap: 0.2em;
 }
 
+.errorWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  font-size: 0.9rem;
+  color: red;
+  transition: grid-template-rows 0.3s ease-out;
+}
+
+.errorWrapperShow {
+  grid-template-rows: 1fr;
+}
+
+.errorWrapper > * {
+  min-height: 0;
+}
+
 .submitBtn {
   display: flex;
   justify-content: center;

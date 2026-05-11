@@ -30,6 +30,23 @@
   gap: 0.2em;
 }
 
+.errorWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  font-size: 0.9rem;
+  color: red;
+  transition: grid-template-rows 0.3s ease-out;
+}
+
+.errorWrapperShow {
+  grid-template-rows: 1fr;
+}
+
+.errorWrapper > * {
+  min-height: 0;
+}
+
 .submitBtn {
   display: flex;
   justify-content: center;
@@ -40,8 +57,7 @@
   color: #fefefe;
   background: linear-gradient(to bottom,#52aafc, #399fff);
   padding: 0.6em;
-  box-shadow: 0 2px 10px rgb(57, 159, 255, 0.2)
-
+  box-shadow: 0 2px 10px rgb(57, 159, 255, 0.2);
 }
 
 .submitBtnText {

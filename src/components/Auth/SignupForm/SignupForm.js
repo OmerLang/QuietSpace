@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { handleSignup } from "@/app/actions/auth";
 import { useMenu } from '@/contexts/MenuContext';
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
 
 export default function SignupForm() {
 
-  const { isLoginPopupOpen, setisLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
+  const { isLoginPopupOpen, setIsLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
 
   const {
     register,
@@ -32,7 +33,7 @@ export default function SignupForm() {
       return 
     }
     setIsSignupPopupOpen(false)
-    setisLoginPopupOpen(true)
+    setIsLoginPopupOpen(true)
     console.log("successfuly signed up")
     return
   }
@@ -44,24 +45,32 @@ export default function SignupForm() {
       <div className={styles.fieldDiv}>
         <label>Full Name</label>
         <input {...register("fullName")}/>
-        {errors.fullName && <p>{errors.fullName.message}</p>}
+        <div className={`${styles.errorWrapper} ${errors.fullName ? styles.errorWrapperShow : ""}`}>
+         <p>{errors.fullName?.message || ""}</p>
+        </div>
       </div>
       <div className={styles.fieldDiv}>
         <label>Email</label>
         <input {...register("email")}/>
-        {errors.email && <p>{errors.email.message}</p>}
+        <div className={`${styles.errorWrapper} ${errors.email ? styles.errorWrapperShow : ""}`}>
+          <p>{errors.email?.message || "" }</p>
+        </div>
       </div>
       <div className={styles.fieldDiv}>
         <label>Password</label>
         <input {...register("password")}/>
-        {errors.password && <p>{errors.password.message}</p>}
+        <div className={`${styles.errorWrapper} ${errors.password ? styles.errorWrapperShow : ""}`}>
+          <p>{errors.password?.message || ""}</p>
+        </div>
       </div>
       <div className={styles.fieldDiv}>
         <label>Confirm password</label>
         <input {...register("confirmPassword")}/>
-        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+        <div className={`${styles.errorWrapper} ${errors.confirmPassword ? styles.errorWrapperShow : ""}`}>
+          <p>{errors.confirmPassword?.message || "" }</p>
+        </div>
       </div>
-      <button type="submit" className={styles.submitBtn} disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? "Logging in..." : "Signup"}</span></button>
+      <button type="submit" className={styles.submitBtn} disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? <LoadingSpinner size={30}/> : "Signup"}</span></button>
     </form>
   )
 }

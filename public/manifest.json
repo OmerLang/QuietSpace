@@ -1,6 +1,6 @@
 {
-  "name": "QuiteSpace",
-  "short_name": "QuiteSpace",
+  "name": "QuietSpace",
+  "short_name": "QuietSpace",
   "description": "Find your quiet spot.",
   "start_url": "/",
   "display": "standalone",
