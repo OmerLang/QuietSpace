@@ -16,19 +16,27 @@ export default function Navbar() {
 
   const toggleLoginPopup = () => {
     setIsMenuOpen(false);
-    setIsSignupPopupOpen(false)
+    if (isSignupPopupOpen === true) {
+      setIsSignupPopupOpen(false)
+    }
     setIsLoginPopupOpen(!isLoginPopupOpen)
   }
 
   const toggleSignupPopup = () => {
     setIsMenuOpen(false);
-    setIsLoginPopupOpen(false)
+    if (isLoginPopupOpen === true) {
+      setIsLoginPopupOpen(false)
+    }
     setIsSignupPopupOpen(!isSignupPopupOpen)
   }
 
   const toggleOverlay = () => {
-    setIsLoginPopupOpen(false)
-    setIsSignupPopupOpen(false)
+    if (isLoginPopupOpen === true) {
+      setIsLoginPopupOpen(false)
+    }
+    if (isSignupPopupOpen === true) {
+      setIsSignupPopupOpen(false)
+    }
     setIsMenuOpen(false)
   }
 
@@ -74,10 +82,10 @@ export default function Navbar() {
       </div>
       <div onClick={toggleOverlay} className={isLoginPopupOpen || isSignupPopupOpen ? styles.overlay : ""}>
       </div>
-      <div className={`${styles.loginPopupPos} ${isLoginPopupOpen ? styles.showPopup : styles.hidePopup}`}>
+      <div className={`${styles.loginPopupPos} ${isLoginPopupOpen === true ? styles.showPopup : (isLoginPopupOpen === false ? styles.hidePopup : "")}`}>
         <LoginPopup key ={isLoginPopupOpen ? "open" : "closed"} />
       </div>
-      <div className={`${styles.signupPopupPos} ${isSignupPopupOpen ? styles.showPopup : styles.hidePopup}`}>
+      <div className={`${styles.signupPopupPos} ${isSignupPopupOpen === true ? styles.showPopup : (isSignupPopupOpen === false ? styles.hidePopup : "")}`}>
         <SignupPopup key = {isSignupPopupOpen ? "open" : "closed" } />
       </div>
     </>

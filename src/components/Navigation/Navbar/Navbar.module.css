@@ -108,28 +108,33 @@
 
 .loginPopupPos {
   position: absolute;
+  visibility: hidden;
+  opacity: 0;
   border-radius: 30px;
-  width: 300px;
+  min-width: 18em;
+  max-width: 30em;
   z-index: 5;
   top: 50%;
   left: 50%;
   transform: translate(150vw, -50%);
-  transition: transform 0.2s ease-out;
 }
 
 .signupPopupPos {
   position: absolute;
+  visibility: hidden;
+  opacity: 0;
   border-radius: 30px;
   width: 300px;
   z-index: 5;
   top: 50%;
   left: 50%;
   transform: translate(150vw, -50%);
-  transition: transform 0.2s ease-out;
 }
 
 .showPopup {
   animation: slideInFromRight 0.2s forwards;
+  visibility: visible;
+  opacity: 1;
 }
 
 @keyframes slideInFromRight {
@@ -139,10 +144,16 @@
 
 .hidePopup {
   animation: slideOutToLeft 0.2s linear forwards;
- 
 }
 
 @keyframes slideOutToLeft {
-  from { transform:  translate(-50%, -50%); }
-  to { transform: translate(-150vw, -50%); }
+  from {
+    transform:  translate(-50%, -50%);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    transform: translate(-150vw, -50%);
+    opacity: 0;
+    visibility: hidden; }
   }

@@ -9,9 +9,8 @@ import { useMenu } from "@/contexts/MenuContext";
 import { useAuth } from "@/contexts/AuthContext";
 import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
-export default function LoginForm() {
+export default function LoginForm({ setIsLoginWelcomeOpen }) {
 
-const router = useRouter();
 const { isLoginPopupOpen, setIsLoginPopupOpen } = useMenu();
 const { refreshAuth } = useAuth();
 
@@ -38,7 +37,8 @@ const {
       }
     }
     await refreshAuth();
-    setIsLoginPopupOpen(false);
+    setIsLoginWelcomeOpen(true);
+    setTimeout(() => setIsLoginPopupOpen(false), 2000)
   }
 
 
@@ -62,7 +62,7 @@ const {
           type="password"
           {...register("password")}
         />
-        <div className={`${styles.errorWrapper} ${errors.email ? styles.errorWrapperShow : ""}`}>
+        <div className={`${styles.errorWrapper} ${errors.password ? styles.errorWrapperShow : ""}`}>
           <p>{errors.password?.message || ""}</p>
         </div>
       </div>

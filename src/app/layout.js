@@ -1,6 +1,6 @@
 import { AuthProvider } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navigation/Navbar/Navbar";
-import { Roboto } from 'next/font/google';
+import { Roboto, Caveat_Brush } from 'next/font/google';
 import styles from './layout.module.css';
 import MapWrapper from "@/components/Map/MapWrapper";
 import { LocationProvider } from "@/contexts/LocationContext";
@@ -14,10 +14,17 @@ const roboto = Roboto({
   display: 'swap'
 })
 
+const caveatBrush = Caveat_Brush({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-caveat-brush',
+});
+
 
 export const metadata = {
   title: "QuietSpace",
-  manifest: "/manifest.json", // This links the file!
+  manifest: "/manifest.json",
 };
 
 export const viewport = {
@@ -30,7 +37,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={`${roboto.className} ${caveatBrush.variable}`}>
       <body>
         <div className={styles.mainLayout}>
           <AuthProvider>

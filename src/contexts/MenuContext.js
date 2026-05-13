@@ -7,8 +7,8 @@ const MenuContext = createContext();
 
 export function MenuProvider ({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(null);
+  const [isSignupPopupOpen, setIsSignupPopupOpen] = useState(null);
 
   return (
     <MenuContext.Provider value={{ isMenuOpen, setIsMenuOpen, isLoginPopupOpen, setIsLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen }}>

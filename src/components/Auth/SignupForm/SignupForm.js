@@ -8,7 +8,7 @@ import { useMenu } from '@/contexts/MenuContext';
 import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
 
-export default function SignupForm() {
+export default function SignupForm({ setIsSignupWelcomeOpen }) {
 
   const { isLoginPopupOpen, setIsLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
 
@@ -32,9 +32,9 @@ export default function SignupForm() {
       console.log(response.errors)
       return 
     }
-    setIsSignupPopupOpen(false)
-    setIsLoginPopupOpen(true)
-    console.log("successfuly signed up")
+    setIsSignupWelcomeOpen(true)
+    setTimeout(() => setIsSignupPopupOpen(false), 5000)
+    setTimeout(() => setIsLoginPopupOpen(true), 5200)
     return
   }
 
