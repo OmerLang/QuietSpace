@@ -6,20 +6,27 @@ import RatingForm from "@/components/RatingForm/RatingForm";
 import { usePois } from "@/contexts/PoisContext";
 import NavLink from "@/components/Navigation/NavLink/NavLink";
 import SingleStar from "../MarkerWithInfoWindow/StarRating/SingleStar";
+import { useMenu } from "@/contexts/MenuContext";
 
 
 export default function PoiInfoWindow () {
 
 
-  const { activePoi, ratedPois } = usePois();
+  const { activePoi, setActivePoi, ratedPois } = usePois();
   const { user } = useAuth();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { setIsLoginPopupOpen } = useMenu();
 
   const fallbackImage = "/images/fallback.jpg";
   const imageSource = activePoi.photo_url || fallbackImage;
   
   const existingRating = (ratedPois.get(activePoi?.google_place_id));
     
+
+  const openLoginBtn = () => {
+    setActivePoi(null);
+    setIsLoginPopupOpen(true)
+  }
 
   return (
       <div className={styles.popupWindow} key={activePoi.google_place_id}>
@@ -94,11 +101,19 @@ export default function PoiInfoWindow () {
                 <div className={styles.scoreStar}><span className={styles.score}>{activePoi.charging_accessibility_rating}</span><SingleStar rating={activePoi.charging_accessibility_rating}/></div>
               </div>    
             </div>
-            <NavLink className={styles.loginBtn} href={"/login"}><span className={styles.btnTextUnlogged}>Login to rate your experience</span></NavLink>              
+              <button 
+                className={styles.loginBtn}
+                onClick={openLoginBtn}>
+                <span className={styles.btnTextUnlogged}>Login to rate your experience</span>
+              </button>
             </>
           ) : (
             <>
-              <NavLink className={styles.loginBtnNotQuietSpace} href={"/login"}><span className={styles.btnTextUnlogged}>Login to add to QuietSpace</span></NavLink>              
+              <button 
+                className={styles.loginBtn}
+                onClick={openLoginBtn}>
+                <span className={styles.btnTextUnlogged}>Login to rate your experience</span>
+              </button>
             </>
         )}
         </>

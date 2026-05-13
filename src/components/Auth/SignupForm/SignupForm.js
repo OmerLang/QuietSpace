@@ -12,6 +12,11 @@ export default function SignupForm({ setIsSignupWelcomeOpen }) {
 
   const { isLoginPopupOpen, setIsLoginPopupOpen, isSignupPopupOpen, setIsSignupPopupOpen } = useMenu();
 
+  const handleLoginRedirect = () => {
+  setIsSignupPopupOpen(false);
+  setIsLoginPopupOpen(true);
+}
+
   const {
     register,
     handleSubmit,
@@ -58,18 +63,26 @@ export default function SignupForm({ setIsSignupWelcomeOpen }) {
       </div>
       <div className={styles.fieldDiv}>
         <label>Password</label>
-        <input {...register("password")}/>
+        <input {...register("password")} type='password'/>
         <div className={`${styles.errorWrapper} ${errors.password ? styles.errorWrapperShow : ""}`}>
           <p>{errors.password?.message || ""}</p>
         </div>
       </div>
       <div className={styles.fieldDiv}>
         <label>Confirm password</label>
-        <input {...register("confirmPassword")}/>
+        <input {...register("confirmPassword")} type='password'/>
         <div className={`${styles.errorWrapper} ${errors.confirmPassword ? styles.errorWrapperShow : ""}`}>
           <p>{errors.confirmPassword?.message || "" }</p>
         </div>
       </div>
+      <button
+        className={styles.redirectContainer}
+        type="button"
+        onClick={handleLoginRedirect}>
+          <span>
+            Already have an account? click to login
+          </span>
+      </button>
       <button type="submit" className={styles.submitBtn} disabled={isSubmitting}><span className={styles.submitBtnText}>{isSubmitting ? <LoadingSpinner size={30}/> : "Signup"}</span></button>
     </form>
   )

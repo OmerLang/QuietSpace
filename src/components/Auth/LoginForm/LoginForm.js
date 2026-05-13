@@ -11,9 +11,14 @@ import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
 export default function LoginForm({ setIsLoginWelcomeOpen }) {
 
-const { isLoginPopupOpen, setIsLoginPopupOpen } = useMenu();
+const { isLoginPopupOpen, setIsLoginPopupOpen, setIsSignupPopupOpen } = useMenu();
 const { refreshAuth } = useAuth();
 
+
+const handleSignupRedirect = () => {
+  setIsLoginPopupOpen(false);
+  setIsSignupPopupOpen(true);
+}
 
 const {
     register,
@@ -66,6 +71,14 @@ const {
           <p>{errors.password?.message || ""}</p>
         </div>
       </div>
+      <button
+        className={styles.redirectContainer}
+        type="button"
+        onClick={handleSignupRedirect}>
+          <span>
+            New? click to sign-up
+          </span>
+      </button>
       <button
         className={styles.submitBtn}
         type="submit"
