@@ -1,0 +1,224 @@
+.container {
+  color: rgba(41, 41, 41, 0.9);
+  background-color: white;
+  border-radius: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2.8em 1em 1.8em 1em;
+  align-items: center;
+  box-sizing: border-box;
+  background: rgb(250, 250, 250);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1.5rem;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.closeBtn:hover {
+  opacity: 0.6;
+}
+
+.closeBtn span {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  height: 18px;
+  width: 2px;
+  transform: translate(-50%, -50%);
+  background-color: black;
+}
+
+.closeBtn .x1 {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.closeBtn .x2 {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.container h1 {
+  font-size: 2.8rem;
+  position: relative;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #0061cf 0%, #6d00ac 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+
+
+.container h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(41, 41, 41, 0.9);
+}
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.categoryList li {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+}
+
+.categoryTitle {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(41, 41, 41, 0.9);
+}
+
+.categoryInfo {
+  font-size: 0.95rem;
+  color: rgba(41, 41, 41, 0.9);
+  line-height: 1.4;
+}
+
+.categoryList li:nth-child(1) .categoryTitleColor { color: #2bac4b; }
+.categoryList li:nth-child(2) .categoryTitleColor { color: #e68a00; }
+.categoryList li:nth-child(3) .categoryTitleColor { color: #ff3b30; }
+
+.container h5 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: rgba(41, 41, 41, 0.9);
+}
+
+.svgWrapper {
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+.svg {
+  animation: animateFill 0.2s forwards ease 2s;
+  shape-rendering: geometricPrecision;
+}
+
+.svgWrapper path {
+  stroke: rgb(62, 123, 255);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.svg path:nth-child(1) {
+  stroke-dasharray: 410;
+  stroke-dashoffset: 410;
+}
+.svg path:nth-child(2) {
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+}
+.svg path:nth-child(3) {
+  stroke-dasharray: 210;
+  stroke-dashoffset: 210;
+}
+.svg path:nth-child(4) {
+  stroke-dasharray: 410;
+  stroke-dashoffset: 410;
+}
+.svg path:nth-child(5) {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+}
+.svg path:nth-child(6) {
+  stroke-dasharray: 510;
+  stroke-dashoffset: 510;
+}
+.svg path:nth-child(7) {
+  stroke-dasharray: 410;
+  stroke-dashoffset: 410;
+}
+.svg path:nth-child(8) {
+  stroke-dasharray: 335;
+  stroke-dashoffset: 335;
+}
+.svg path:nth-child(9) {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+}
+.svg path:nth-child(10) {
+  stroke-dasharray: 410;
+  stroke-dashoffset: 410;
+}
+
+.animationActive {
+  animation: animateSvg 1.2s ease-out forwards;
+  animation-delay: var(--delay, 0);
+}
+
+
+
+@keyframes animateSvg {
+  from {
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes animateFill {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: rgb(62, 123, 255);
+  }
+}
+
+.underlineSvg {
+  position: absolute;
+  shape-rendering: geometricPrecision;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 20px);
+  z-index: -1;
+}
+
+.underlineSvg path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke: url(#grad);
+  stroke-width:8px;
+  rotate: 3deg;
+  transform-origin: left;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset 3s ease-out;
+
+}
+
+.underlineSvg path.underlineActive {
+  stroke-dashoffset: 0;
+}
+
+
+
+
+
+

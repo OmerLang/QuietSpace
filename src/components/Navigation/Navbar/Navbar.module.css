@@ -137,14 +137,47 @@
   opacity: 1;
 }
 
+.hidePopup {
+  animation: slideOutToLeft 0.2s linear forwards;
+}
+
+.aboutPopupPos {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  width: 95%;
+  scroll-behavior: contain;
+  height: calc(100dvh - 1em);
+  margin-top: 0.5em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  overflow-y: auto;
+}
+
+
+
+.showAboutPopup {
+  animation: slideInFromBottom 0.2s forwards;
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideAboutPopup {
+  animation: slideOutToBottom 0.2s linear forwards;
+}
+
+
+
 @keyframes slideInFromRight {
   from { transform: translate(150vw, -50%); }
   to { transform: translate(-50%, -50%); }
 }
 
-.hidePopup {
-  animation: slideOutToLeft 0.2s linear forwards;
-}
+
 
 @keyframes slideOutToLeft {
   from {
