@@ -57,7 +57,7 @@
   position: absolute;
   width: 100%;
   left: 50%;
-  bottom: -12px;
+  bottom: -14px;
   transform: translateX(-50%);
   z-index: -1;
 }

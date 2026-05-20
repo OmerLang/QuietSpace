@@ -160,13 +160,13 @@
 }
 
 .showAboutPopup {
-  animation: slideInFromBottom 0.2s forwards;
+  animation: slideInFromBottom 0.4s forwards;
   visibility: visible;
   opacity: 1;
 }
 
 .hideAboutPopup {
-  animation: slideOutToBottom 0.2s forwards;
+  animation: slideOutToBottom 0.4s forwards;
 }
 
 @keyframes slideInFromBottom {
