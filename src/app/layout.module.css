@@ -1,6 +1,7 @@
 .mainLayout {
   position: relative;
   height: 100dvh;  
+  overflow: clip;
 }
 
 .mainContent {

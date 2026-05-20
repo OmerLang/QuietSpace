@@ -148,17 +148,16 @@
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   width: 95%;
+  max-width: 800px;
   scroll-behavior: contain;
   height: calc(100dvh - 1em);
   margin-top: 0.5em;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 50%);
   z-index: 5;
   overflow-y: auto;
 }
-
-
 
 .showAboutPopup {
   animation: slideInFromBottom 0.2s forwards;
@@ -167,8 +166,33 @@
 }
 
 .hideAboutPopup {
-  animation: slideOutToBottom 0.2s linear forwards;
+  animation: slideOutToBottom 0.2s forwards;
 }
+
+@keyframes slideInFromBottom {
+  from {
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, 50%);
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes slideOutToBottom {
+from {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 50%);
+  }}
 
 
 

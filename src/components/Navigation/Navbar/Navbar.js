@@ -51,6 +51,7 @@ export default function Navbar() {
     if (isSignupPopupOpen === true) {
       setIsSignupPopupOpen(false)
     }
+    setIsMenuOpen(false);
     setIsAboutOpen(!isAboutOpen);
   }
 
