@@ -27,13 +27,14 @@
 
 .menuBtn span {
   width: 32px;
-  height: 1px;
+  height: 2px;
   border-radius: 1px;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 0.7);
   transition: margin-left 0.2s ease-in-out;
 }
 
 .middleLine {
+  shape-rendering: crispEdges;
   margin-left: 3px;
   transition-delay: 0.05s;
 }

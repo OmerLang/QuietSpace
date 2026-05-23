@@ -47,10 +47,16 @@
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.container h3 {
+  font-size: 1.2rem;
+  color: rgba(41, 41, 41, 0.9);
+
+}
 
 .legendTitle {
   position: relative;
   z-index: 1;
+  font-size: 1.2rem;
 }
 
 .legendWrapper {
@@ -76,7 +82,7 @@
   position: absolute;
   width: 100%;
   left: 50%;
-  bottom: -14px;
+  bottom: -16px;
   transform: translateX(-50%);
   z-index: -1;
 }
@@ -102,14 +108,6 @@
 .contributionSvg {
   transform: scaleY(0.6);
   shape-rendering: geometricPrecision;
-}
-
-.container h3 {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  line-height: 1.5;
-  color: rgba(41, 41, 41, 0.9);
 }
 
 .mainDescription {
@@ -154,11 +152,6 @@
 .categoryList li:nth-child(2) .categoryTitleColor { color: #e68a00; }
 .categoryList li:nth-child(3) .categoryTitleColor { color: #ff3b30; }
 
-.container h5 {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: rgba(41, 41, 41, 0.9);
-}
 
 .svgWrapper {
   width: 90%;
@@ -272,9 +265,3 @@
 .underlineSvg path.underlineActive {
   stroke-dashoffset: 0;
 }
-
-
-
-
-
-

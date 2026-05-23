@@ -182,7 +182,7 @@ export const About = () => {
           </span>
         </li>
       </ul>
-      <h5 className={styles.thirdTitle}>
+      <h3 className={styles.thirdTitle}>
         Your Contribution
         <div className={styles.contributionSvgWrapper}>
           <svg className={styles.contributionSvg} viewBox="0 0 1418 125">
@@ -192,7 +192,7 @@ export const About = () => {
             ></path>
           </svg>
         </div>
-      </h5>
+      </h3>
       <p>The map stays accurate because of users like you. You can:</p>
       <ul className={styles.categoryList}>
         <li>
