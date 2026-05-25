@@ -2,17 +2,35 @@
   --content-width: 75%;
   --content-width-max: 1200px;
   --navbar-height: 50px;
-  --background: #ffffff;
-  --foreground: #171717;
+  --br-btn: 12px;
+  --border: 1px solid rgba(131, 130, 130, 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.light {
+  --color: rgb(37, 37, 37);
+  --bg-submit-btn: linear-gradient(to bottom, #52aafc, #399fff);
+  --bg-transparent: rgba(255, 255, 255, 0.5);
+  --bg-infowindow: rgba(255, 255, 255, 0.5);
+  --bg: rgb(250, 250, 250);
+  --box-shadow: 0 2px 10px rgb(57, 159, 255, 0.2);
+  --bg-foreground: #ffffff;
+  --bg-input: rgba(255, 255, 255, 0.8);
+  --backdrop-filter: blur(8px);
+  --bg-redirect-btn: rgb(255, 255, 255);
 }
 
+.dark {
+  --color: #f8fafc;
+  --bg-submit-btn: linear-gradient(to bottom, #8d52fc, #9f39ff);
+  --bg-transparent: rgba(15, 16, 43, 0.5);
+  --bg-infowindow: rgba(5, 5, 44, 0.5);
+  --bg: #141b2c;
+  --bg-foreground: #202241;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --bg-input: rgba(5, 5, 49, 0.8);
+  --backdrop-filter: blur(16px);
+  --bg-redirect-btn: rgba(5, 5, 49, 1);
+}
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -40,10 +58,12 @@ body {
   padding: 0 !important;
 }
 
-
 /* 3. Remove the 'Close' button padding if you aren't using the header */
 .gm-style-iw-tc::after {
-  background: white; /* Matches the tail color to your content if needed */
+  backdrop-filter: var(--backdrop-filter) !important;
+  background: var(
+    --bg-infowindow
+  ) !important; /* Matches the tail color to your content if needed */
 }
 
 .gm-style-iw-c {
@@ -55,7 +75,8 @@ body {
 
   /* Optional: Control the border and background color here too */
   border: none !important;
-  background-color: #ffffff !important;
+  backdrop-filter: var(--backdrop-filter) !important;
+  background: var(--bg-infowindow) !important;
 }
 
 body {
@@ -67,7 +88,9 @@ body {
   margin: 0;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
@@ -87,11 +110,13 @@ button {
   box-sizing: border-box;
 }
 
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
   font-family: inherit;
   font-size: 16px !important;
 }
-
 
 @media (prefers-color-scheme: dark) {
   html {

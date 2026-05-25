@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 350px;
-  padding: 1em ;
+  padding: 1em;
   border-radius: 8px;
   gap: 1rem;
 }
@@ -12,21 +12,21 @@
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: #373738;
+  color: inherit;
   text-transform: uppercase;
 }
 
 .signupForm input {
   height: 2.4em;
-  border: 1px solid rgb(190, 190, 190, 1);
-  background-color: rgba(255, 255, 255, 0.8);
+  border: var(--border);
+  background-color: var(--bg-input);
   border-radius: 12px;
   padding: 8px;
 }
 
 .fieldDiv {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 0.2em;
 }
 
@@ -55,10 +55,9 @@
   border: none;
   font-weight: 400;
   color: #fefefe;
-  background: linear-gradient(to bottom,#52aafc, #399fff);
+  background: var(--bg-submit-btn);
   padding: 0.6em;
-  box-shadow: 0 2px 10px rgb(57, 159, 255, 0.2)
-
+  box-shadow: var(--box-shadow);
 }
 
 .submitBtnText {
@@ -68,12 +67,10 @@
 .redirectContainer {
   display: flex;
   justify-content: center;
-
 }
 
 .redirectContainer span {
-  color: #373738;
-  border-bottom: 1px solid #373738;
+  color: inherit;
+  border-bottom: 1px solid var(--color);
   font-size: 0.8rem;
 }
-

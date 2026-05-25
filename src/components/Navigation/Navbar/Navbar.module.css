@@ -4,8 +4,9 @@
   left: 9%;
   z-index: 2;
   display: flex;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 12px;
+  background-color: var(--bg-transparent);
+  backdrop-filter: blur(15px);
+  border-radius: var(--br-btn);
   height: 50px;
   border: 1px solid rgba(131, 130, 130, 0.3);
   transform-origin: left;
@@ -20,7 +21,7 @@
   height: 100%;
   gap: 12px;
   padding: 8px 8px;
-  border-radius: 12px;
+  border-radius: var(--br-btn);
   z-index: 5;
   cursor: pointer;
 }
@@ -29,7 +30,7 @@
   width: 32px;
   height: 2px;
   border-radius: 1px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--color);
   transition: margin-left 0.2s ease-in-out;
 }
 
@@ -54,27 +55,26 @@
   overflow-x: hidden;
   white-space: nowrap;
   transition:
-    max-width 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06),
-    margin-left 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06),
-    margin-right 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06);
+    max-width 0.2s cubic-bezier(0, 0.48, 0.32, 1.06),
+    margin-left 0.2s cubic-bezier(0, 0.48, 0.32, 1.06),
+    margin-right 0.2s cubic-bezier(0, 0.48, 0.32, 1.06);
   will-change: max-width, margin;
 }
 
 .show {
   max-width: 300px;
   transition:
-    max-width 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06),
-    margin-left 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06),
-    margin-right 0.2s cubic-bezier(0 , 0.48, 0.32, 1.06);
+    max-width 0.2s cubic-bezier(0, 0.48, 0.32, 1.06),
+    margin-left 0.2s cubic-bezier(0, 0.48, 0.32, 1.06),
+    margin-right 0.2s cubic-bezier(0, 0.48, 0.32, 1.06);
   will-change: max-width, margin;
 }
 
 .spacer {
   height: 25px;
   width: 1px;
-  background-color: rgba(131, 130, 130, 0.600);
+  background-color: rgba(131, 130, 130, 0.6);
 }
-
 
 .button {
   padding: 12px 20px;
@@ -83,6 +83,7 @@
   border-radius: 12px;
   background-color: transparent;
   transition: background-color 0.1s ease-out;
+  color: var(--color);
 }
 
 .button:last-child {
@@ -184,7 +185,7 @@
 }
 
 @keyframes slideOutToBottom {
-from {
+  from {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -193,25 +194,27 @@ from {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, 50%);
-  }}
-
-
-
-@keyframes slideInFromRight {
-  from { transform: translate(150vw, -50%); }
-  to { transform: translate(-50%, -50%); }
+  }
 }
 
-
+@keyframes slideInFromRight {
+  from {
+    transform: translate(150vw, -50%);
+  }
+  to {
+    transform: translate(-50%, -50%);
+  }
+}
 
 @keyframes slideOutToLeft {
   from {
-    transform:  translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     opacity: 1;
     visibility: visible;
   }
   to {
     transform: translate(-150vw, -50%);
     opacity: 0;
-    visibility: hidden; }
+    visibility: hidden;
   }
+}

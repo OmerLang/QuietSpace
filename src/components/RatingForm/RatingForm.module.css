@@ -1,4 +1,3 @@
-
 .ratingForm {
   display: flex;
   flex-direction: column;
@@ -22,12 +21,12 @@
 }
 
 .fieldDiv label {
-  color: #3d3d3d;
+  color: var(--color);
   letter-spacing: 0.1em;
   display: inline-block;
   width: min-content;
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 500;
   padding-top: 3px;
   text-align: center;
 }
@@ -41,13 +40,13 @@
 
 .fieldDivText textarea {
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: var(--br-btn);
   border: 1px solid #ddd;
   height: 35px;
   max-height: 80px;
   min-height: 25px;
-  padding-left: 6px;
-  padding-top: 3px;
+  padding-left: 8px;
+  padding-top: 5px;
   resize: vertical;
 }
 
@@ -59,7 +58,7 @@ textarea::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #3d3d3d;
+  color: inherit;
 }
 
 .btnsWrapper {
@@ -74,37 +73,38 @@ textarea::placeholder {
 .btnText {
   font-size: 0.8em;
   padding: 6px 14px;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: var(--border);
+  border-radius: var(--br-btn);
+  background: var(--bg-input);
+  color: inherit;
+  box-shadow: var(--box-shadow);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .btnText:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px);
 }
 
 .btnText:active {
   transform: translateY(0);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .popup {
-  /* Remove display: none */
-  display: flex; 
+  display: flex;
   justify-content: center;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
   visibility: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease, transform 0.3s ease;
-  transform: translateY(-5px); /* Start slightly higher for a "drop-in" feel */
-  
+  transition:
+    opacity 0.3s ease,
+    max-height 0.3s ease,
+    transform 0.3s ease;
+  transform: translateY(-5px);
+
   z-index: 1;
-  padding: 0 5px; /* Change vertical padding to 0 when closed */
+  padding: 0 5px;
   border-radius: 12px;
   text-wrap: nowrap;
 }
@@ -112,9 +112,9 @@ textarea::placeholder {
 .showPopup {
   opacity: 1;
   visibility: visible;
-  max-height: 30px; /* Set to a value larger than your text size */
+  max-height: 30px;
   padding: 2px 5px;
-  transform: translateY(0); /* Slide into place */
+  transform: translateY(0);
 }
 
 .popupTextRed {

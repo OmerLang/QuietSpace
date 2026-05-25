@@ -1,0 +1,17 @@
+.button {
+  position: absolute;
+  background-color: var(--bg-transparent);
+  backdrop-filter: blur(10px);
+  border-radius: var(--br-btn);
+  padding: 0.3em;
+  top: 20%;
+  left: 10px;
+  height: 46px;
+  width: 46px;
+  z-index: 2;
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+}
+
+.moon {
+  fill: rgb(87, 19, 245);
+}

@@ -4,9 +4,9 @@
   justify-content: center;
   position: relative;
   align-items: center;
-  border: 1px solid rgb(190, 190, 190);
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
+  border: var(--border);
+  background-color: var(--bg-transparent);
+  backdrop-filter: var(--backdrop-filter);
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
   border-radius: inherit;
   corner-shape: round;
@@ -25,16 +25,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-weight: 700;
   letter-spacing: -0.03em;
   font-size: 2.2rem;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-font-smoothing: antialiased;
-  color: #374151;
+  color: inherit;
 }
-
 
 .closeBtn {
   position: absolute;
@@ -55,7 +59,7 @@
   height: 18px;
   width: 2px;
   transform: translate(-50%, -50%);
-  background-color: black;
+  background-color: var(--color);
 }
 
 .closeBtn .x1 {
@@ -85,12 +89,12 @@
   transform: translate(-50%, -50%);
   transform: translate(-150vw, -50%);
   font-size: 2.5rem;
-  
+
   transition: transform 0.2s ease-out;
 }
 
 .welcomeText h1 {
-  color: rgba(41, 41, 41, 0.836);
+  color: var(--color);
   font-size: 3rem;
 }
 
@@ -119,9 +123,8 @@
   0% {
     background-position: 0% center;
   }
-  
+
   100% {
     background-position: 300% center;
   }
 }
-
