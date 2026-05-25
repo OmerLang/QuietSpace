@@ -2,13 +2,12 @@
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   background-color: var(--bg-transparent);
   backdrop-filter: blur(10px);
   border-radius: var(--br-btn);
   width: 45px;
   height: 45px;
-  overflow-x: clip;
+  overflow: hidden;
   top: 20%;
   left: 10px;
   z-index: 2;
@@ -16,22 +15,29 @@
 }
 
 .container {
-  box-sizing: content-box;
-  width: 80px;
-  height: 36px;
-  gap: 10px;
+  flex-shrink: 0;
+  width: 90px;
+  height: 45px;
   display: flex;
-  border-radius: inherit;
   transition: transform 0.2s ease-out;
 }
 
-.showSun {
-  transform: translate(-50%);
-  transition: transform 0.2s ease-out;
+.container > svg {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0.3em;
 }
+
+.showSun {
+  transform: translateX(-50%);
+}
+
 .showMoon {
-  transform: translate(5px);
-  transition: transform 0.2s ease-out;
+  transform: translateX(0);
 }
 
 .moon {
