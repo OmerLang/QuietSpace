@@ -1,17 +1,39 @@
 .button {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   background-color: var(--bg-transparent);
   backdrop-filter: blur(10px);
   border-radius: var(--br-btn);
-  padding: 0.3em;
+  width: 45px;
+  height: 45px;
+  overflow-x: clip;
   top: 20%;
   left: 10px;
-  height: 46px;
-  width: 46px;
   z-index: 2;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
 }
 
+.container {
+  box-sizing: content-box;
+  width: 80px;
+  height: 36px;
+  gap: 10px;
+  display: flex;
+  border-radius: inherit;
+  transition: transform 0.2s ease-out;
+}
+
+.showSun {
+  transform: translate(-50%);
+  transition: transform 0.2s ease-out;
+}
+.showMoon {
+  transform: translate(5px);
+  transition: transform 0.2s ease-out;
+}
+
 .moon {
-  fill: rgb(87, 19, 245);
+  fill: rgb(43, 9, 107);
 }
