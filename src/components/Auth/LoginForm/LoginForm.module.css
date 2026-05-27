@@ -54,6 +54,7 @@
   align-items: center;
   border-radius: 15px;
   border: none;
+  width: 100%;
   font-weight: 400;
   color: #fefefe;
   background: var(--bg-submit-btn);
@@ -80,35 +81,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.svgDivGoogle {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  height: 40px;
-  padding: 0.2em 1em;
+  gap: 0.6em;
+  width: 80%;
+  max-width: 320px;
+  height: 34px;
+  margin: 0 auto;
+  padding: 0 1em;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   border: var(--border);
   border-radius: 30px;
 }
 
-.svgDivGoogle span {
-  font-size: 0.8rem;
+.googleBtn span {
+  font-size: 0.85rem;
   text-wrap: nowrap;
   color: inherit;
+  font-weight: 500;
 }
 
 .googleBtn svg {
   display: block;
-  width: 100%;
-  height: 60%;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .btnsWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 0.6em;
+  width: 100%;
 }

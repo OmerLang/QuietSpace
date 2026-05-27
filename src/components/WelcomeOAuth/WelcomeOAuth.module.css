@@ -4,8 +4,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  visibility: none;
+  visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   z-index: 5;
   border-radius: 12px;
   display: flex;
@@ -51,10 +52,12 @@
 .showWelcome {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
 }
 
 .hideWelcome {
   visibility: visible;
+  pointer-events: none;
   opacity: 1;
   transform: translate(-150vw, -50%);
 }
