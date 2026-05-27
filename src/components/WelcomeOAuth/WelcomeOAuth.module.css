@@ -1,0 +1,89 @@
+.container {
+  position: absolute;
+  max-width: 800px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: none;
+  opacity: 0;
+  z-index: 5;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: var(--border);
+  background-color: var(--bg-transparent);
+  backdrop-filter: var(--backdrop-filter);
+  padding: 2.2em 2em;
+  transition: transform 0.2s ease-out;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.closeBtn:hover {
+  opacity: 0.6;
+}
+
+.closeBtn span {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  height: 18px;
+  width: 2px;
+  transform: translate(-50%, -50%);
+  background-color: var(--color);
+}
+
+.closeBtn .x1 {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.closeBtn .x2 {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.showWelcome {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hideWelcome {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-150vw, -50%);
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  margin-top: 1em;
+  border-radius: inherit;
+}
+
+.welcomeText h1 {
+  color: var(--color);
+  font-size: 3rem;
+}
+
+.welcomeText span::first-letter {
+  text-transform: uppercase;
+}
+
+.welcomeText span {
+  color: transparent;
+  font-family: var(--font-caveat-brush);
+  font-size: 3.5rem;
+  font-weight: 500;
+  background-image: linear-gradient(to right, #6bb0c4, #787fc4, #6bb0c4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 300% auto;
+  background-position: left;
+}

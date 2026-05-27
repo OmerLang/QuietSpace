@@ -7,6 +7,7 @@ import { useMenu } from "@/contexts/MenuContext";
 import LoginPopup from "@/components/LoginPopup/LoginPopup";
 import SignupPopup from "@/components/SignupPopup/SignupPopup";
 import { About } from "@/components/About/About";
+import WelcomeOAuth from "@/components/WelcomeOAuth/WelcomeOAuth";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -130,6 +131,7 @@ export default function Navbar() {
       >
         <About key={isAboutOpen ? "open" : "closed"} />
       </div>
+      <WelcomeOAuth />
     </>
   );
 }

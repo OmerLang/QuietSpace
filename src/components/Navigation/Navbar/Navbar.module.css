@@ -90,10 +90,6 @@
   margin-right: px;
 }
 
-.button:hover {
-  background-color: rgba(163, 163, 163, 0.06);
-}
-
 .btnText {
   font-size: 1rem;
 }
