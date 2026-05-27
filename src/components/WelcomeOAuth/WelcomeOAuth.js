@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import styles from "./WelcomeOAuth.module.css";
 
-export default function WelcomeOAuth() {
+function WelcomeOAuthContent() {
   const [isOpen, setIsOpen] = useState(null);
   const [userName, setUserName] = useState("");
 
@@ -53,5 +53,13 @@ export default function WelcomeOAuth() {
         <h1>Welcome</h1> <span>{userName}</span>
       </div>
     </div>
+  );
+}
+
+export default function WelcomeOAuth() {
+  return (
+    <Suspense fallback={null}>
+      <WelcomeOAuthContent />
+    </Suspense>
   );
 }
