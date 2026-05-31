@@ -1,7 +1,7 @@
 .navbarContainer {
   position: absolute;
-  top: 30px;
-  left: 9%;
+  top: 10%;
+  left: 7%;
   z-index: 2;
   display: flex;
   background-color: var(--bg-transparent);
@@ -213,4 +213,16 @@
     opacity: 0;
     visibility: hidden;
   }
+}
+
+.searchContainer {
+  position: absolute;
+  z-index: 5;
+  width: 85%;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 35px;
+  max-width: 400px;
+  border-radius: var(--br-btn);
 }

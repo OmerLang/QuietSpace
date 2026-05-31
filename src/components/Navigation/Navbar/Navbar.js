@@ -8,6 +8,7 @@ import LoginPopup from "@/components/LoginPopup/LoginPopup";
 import SignupPopup from "@/components/SignupPopup/SignupPopup";
 import { About } from "@/components/About/About";
 import WelcomeOAuth from "@/components/WelcomeOAuth/WelcomeOAuth";
+import { Searchbar } from "@/components/Searchbar/Searchbar";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -69,6 +70,9 @@ export default function Navbar() {
 
   return (
     <>
+      <div className={styles.searchContainer}>
+        <Searchbar />
+      </div>
       <div className={styles.navbarContainer}>
         <button onClick={toggleMenu} className={styles.menuBtn}>
           <span className={isMenuOpen ? styles.firstLine : ""}></span>

@@ -1,0 +1,11 @@
+.input {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: transparent;
+  border: none;
+  padding-left: 10px;
+  color: black;
+  outline: none;
+  background-color: white;
+}

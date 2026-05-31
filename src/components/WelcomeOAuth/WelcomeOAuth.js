@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useMemo } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import styles from "./WelcomeOAuth.module.css";
@@ -12,9 +12,10 @@ function WelcomeOAuthContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
+    let timeoutId;
     if (searchParams.get("welcome") === "true") {
       const getProfileData = async () => {
         const {
@@ -23,7 +24,7 @@ function WelcomeOAuthContent() {
         if (user) {
           const splitEmail = user.email.split("@")[0];
           setUserName(
-            user.user_metadata?.full_name.split(" ")[0] || splitEmail,
+            user.user_metadata?.full_name?.split(" ")[0] || splitEmail,
           );
           setIsOpen(true);
         }
@@ -31,7 +32,7 @@ function WelcomeOAuthContent() {
 
       getProfileData();
 
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete("welcome");
         const newQuery = params.toString() ? `?${params.toString()}` : "";
@@ -39,6 +40,9 @@ function WelcomeOAuthContent() {
         setIsOpen(false);
       }, 3000);
     }
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [searchParams, router, pathname, supabase]);
 
   return (
