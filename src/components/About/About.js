@@ -4,22 +4,22 @@ import { useMenu } from "@/contexts/MenuContext";
 import { url } from "zod";
 
 export const About = () => {
-  const { isAboutOpen, setIsAboutOpen } = useMenu();
+  const { activeOverlay, closeOverlay } = useMenu();
   const [animate, setAnimte] = useState(false);
 
   useEffect(() => {
-    if (isAboutOpen === true) {
+    if (activeOverlay === "about") {
       setTimeout(() => {
         (setAnimte(true), 1000);
       });
-    } else if (!isAboutOpen) {
+    } else {
       setAnimte(false);
     }
-  }, [isAboutOpen]);
+  }, [activeOverlay]);
 
   return (
     <div className={styles.container}>
-      <button className={styles.closeBtn} onClick={() => setIsAboutOpen(false)}>
+      <button className={styles.closeBtn} onClick={() => closeOverlay()}>
         <span className={styles.x1}></span>
         <span className={styles.x2}></span>
       </button>

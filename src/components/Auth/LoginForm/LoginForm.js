@@ -10,13 +10,12 @@ import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { createClient } from "@/utils/supabase/client";
 
 export default function LoginForm({ setIsLoginWelcomeOpen }) {
-  const { setIsLoginPopupOpen, setIsSignupPopupOpen } = useMenu();
+  const { openOverlay, closeOverlay, switchOverlay } = useMenu();
   const { refreshAuth } = useAuth();
   const supabase = createClient();
 
   const handleSignupRedirect = () => {
-    setIsLoginPopupOpen(false);
-    setIsSignupPopupOpen(true);
+    switchOverlay("signup");
   };
 
   const {
@@ -42,7 +41,7 @@ export default function LoginForm({ setIsLoginWelcomeOpen }) {
     }
     await refreshAuth();
     setIsLoginWelcomeOpen(true);
-    setTimeout(() => setIsLoginPopupOpen(false), 2000);
+    setTimeout(() => closeOverlay(), 2000);
   };
 
   const handleGoogleAuth = async () => {

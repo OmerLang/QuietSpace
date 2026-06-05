@@ -16,7 +16,7 @@ export default function MapInstance({ id, children, ...props }) {
   const location = useLocation();
   const map = useMap(id);
   const { setActivePoi, cachedPois, setCachedPois } = usePois();
-  const { setIsMenuOpen } = useMenu();
+  const { setIsMenuOpen, setSearchInputActive } = useMenu();
   const { theme } = useTheme();
 
   const handleIdle = useCallback(async () => {
@@ -92,6 +92,7 @@ export default function MapInstance({ id, children, ...props }) {
   const onGooglePoiClick = useCallback(async (event) => {
     event.stop();
     setIsMenuOpen(false);
+    setSearchInputActive(false);
     const { detail } = event;
     if (!detail.placeId) {
       return setActivePoi(null);
@@ -138,7 +139,10 @@ export default function MapInstance({ id, children, ...props }) {
       colorScheme={theme === "dark" ? "DARK" : "LIGHT"}
       minZoom={3}
       onIdle={handleIdle}
-      onDrag={() => setIsMenuOpen(false)}
+      onDrag={() => {
+        setIsMenuOpen(false);
+        setSearchInputActive(false);
+      }}
       restriction={{
         latLngBounds: { north: 33.8, south: 29, west: 33.5, east: 36.2 },
         strictBounds: true,

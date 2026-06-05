@@ -15,56 +15,55 @@ export default function Navbar() {
   const {
     isMenuOpen,
     setIsMenuOpen,
-    isLoginPopupOpen,
-    setIsLoginPopupOpen,
-    isSignupPopupOpen,
-    setIsSignupPopupOpen,
-    isAboutOpen,
-    setIsAboutOpen,
+    activeOverlay,
+    openOverlay,
+    closeOverlay,
+    lastOpen,
   } = useMenu();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const toggleLoginPopup = () => {
-    setIsMenuOpen(false);
-    if (isSignupPopupOpen === true) {
-      setIsSignupPopupOpen(false);
-    }
-    if (isAboutOpen === true) {
-      setIsAboutOpen(false);
-    }
-    setIsLoginPopupOpen(!isLoginPopupOpen);
-  };
+  // const toggleLoginPopup = () => {
+  //   setIsMenuOpen(false);
+  //   if (isSignupPopupOpen === true) {
+  //     setIsSignupPopupOpen(false);
+  //   }
+  //   if (isAboutOpen === true) {
+  //     setIsAboutOpen(false);
+  //   }
+  //   setIsLoginPopupOpen(!isLoginPopupOpen);
+  // };
 
-  const toggleSignupPopup = () => {
-    setIsMenuOpen(false);
-    if (isLoginPopupOpen === true) {
-      setIsLoginPopupOpen(false);
-    }
-    if (isAboutOpen === true) {
-      setIsAboutOpen(false);
-    }
-    setIsSignupPopupOpen(!isSignupPopupOpen);
-  };
+  // const toggleSignupPopup = () => {
+  //   setIsMenuOpen(false);
+  //   if (isLoginPopupOpen === true) {
+  //     setIsLoginPopupOpen(false);
+  //   }
+  //   if (isAboutOpen === true) {
+  //     setIsAboutOpen(false);
+  //   }
+  //   setIsSignupPopupOpen(!isSignupPopupOpen);
+  // };
 
-  const toggleAbout = () => {
-    if (isLoginPopupOpen === true) {
-      setIsLoginPopupOpen(false);
-    }
-    if (isSignupPopupOpen === true) {
-      setIsSignupPopupOpen(false);
-    }
-    setIsMenuOpen(false);
-    setIsAboutOpen(!isAboutOpen);
-  };
+  // const toggleAbout = () => {
+  //   if (isLoginPopupOpen === true) {
+  //     setIsLoginPopupOpen(false);
+  //   }
+  //   if (isSignupPopupOpen === true) {
+  //     setIsSignupPopupOpen(false);
+  //   }
+  //   setIsMenuOpen(false);
+  //   setIsAboutOpen(!isAboutOpen);
+  // };
 
   const toggleOverlay = () => {
-    if (isLoginPopupOpen === true) {
-      setIsLoginPopupOpen(false);
-    }
-    if (isSignupPopupOpen === true) {
-      setIsSignupPopupOpen(false);
-    }
+    closeOverlay();
+    // if (isLoginPopupOpen === true) {
+    //   setIsLoginPopupOpen(false);
+    // }
+    // if (isSignupPopupOpen === true) {
+    //   setIsSignupPopupOpen(false);
+    // }
     setIsMenuOpen(false);
   };
 
@@ -83,8 +82,8 @@ export default function Navbar() {
           className={`${styles.innerContainer} ${isMenuOpen ? styles.show : ""}`}
         >
           <button
-            className={`${styles.button} ${isAboutOpen ? styles.buttonShow : ""}`}
-            onClick={toggleAbout}
+            className={`${styles.button} ${activeOverlay === "about" ? styles.buttonShow : ""}`}
+            onClick={() => openOverlay("about")}
           >
             <span className={styles.btnText}>About</span>
           </button>
@@ -92,7 +91,7 @@ export default function Navbar() {
           <NavAuthButton
             onClick={() => {
               if (!user) {
-                toggleLoginPopup();
+                openOverlay("login");
               }
             }}
             className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
@@ -109,7 +108,7 @@ export default function Navbar() {
           ) : (
             <button
               className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
-              onClick={toggleSignupPopup}
+              onClick={() => openOverlay("signup")}
             >
               <span className={styles.btnText}>Signup</span>
             </button>
@@ -118,22 +117,26 @@ export default function Navbar() {
       </div>
       <div
         onClick={toggleOverlay}
-        className={isLoginPopupOpen || isSignupPopupOpen ? styles.overlay : ""}
+        className={
+          activeOverlay === "login" || activeOverlay === "signup"
+            ? styles.overlay
+            : ""
+        }
       ></div>
       <div
-        className={`${styles.loginPopupPos} ${isLoginPopupOpen === true ? styles.showPopup : isLoginPopupOpen === false ? styles.hidePopup : ""}`}
+        className={`${styles.loginPopupPos} ${activeOverlay === "login" ? styles.showPopup : lastOpen === "login" ? styles.hidePopup : ""}`}
       >
-        <LoginPopup key={isLoginPopupOpen ? "open" : "closed"} />
+        <LoginPopup key={activeOverlay === "login" ? "open" : "closed"} />
       </div>
       <div
-        className={`${styles.signupPopupPos} ${isSignupPopupOpen === true ? styles.showPopup : isSignupPopupOpen === false ? styles.hidePopup : ""}`}
+        className={`${styles.signupPopupPos} ${activeOverlay === "signup" ? styles.showPopup : lastOpen === "signup" ? styles.hidePopup : ""}`}
       >
-        <SignupPopup key={isSignupPopupOpen ? "open" : "closed"} />
+        <SignupPopup key={activeOverlay === "signup" ? "open" : "closed"} />
       </div>
       <div
-        className={`${styles.aboutPopupPos} ${isAboutOpen === true ? styles.showAboutPopup : isAboutOpen === false ? styles.hideAboutPopup : ""}`}
+        className={`${styles.aboutPopupPos} ${activeOverlay === "about" ? styles.showAboutPopup : lastOpen === "about" ? styles.hideAboutPopup : ""}`}
       >
-        <About key={isAboutOpen ? "open" : "closed"} />
+        <About key={activeOverlay === "about" ? "open" : "closed"} />
       </div>
       <WelcomeOAuth />
     </>
