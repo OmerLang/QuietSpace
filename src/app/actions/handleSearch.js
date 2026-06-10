@@ -50,13 +50,17 @@ export const handleSearch = async (searchTerm, lat, lng) => {
       },
     },
   );
-  const { places: placesIDs } = await responseIDs.json();
+  const dataG = await responseIDs.json();
+
+  const placesIDs = dataG?.places ?? [];
+
   console.log("placesByGoogle:", placesIDs);
 
-  const placesIDsArr = placesIDs.map((placeID) => placeID.id) || [];
   if (placesIDs.length < 1) {
     return [];
   }
+  const placesIDsArr = placesIDs.map((placeID) => placeID.id) || [];
+
   const { data, error } = await supabase
     .from("search_places_view")
     .select("*")
@@ -240,7 +244,51 @@ export const handleSearch = async (searchTerm, lat, lng) => {
     console.log("[After Context] Image sync completed successfully.");
   });
 
-  const combinedResults = [...(data || []), ...dbRowsToInsert];
+  const normalizedGooglePlace = gPlacesTotallyFiltered.map((place) => {
+    let address = null;
+    if (place?.addressComponents) {
+      const components = place.addressComponents;
+      const getPart = (type) => {
+        const match = components.find((c) => c?.types?.includes(type));
+        return match ? match.longText : "";
+      };
+      const route = getPart("route");
+      const fallback = components[0]?.longText;
+      const streetNumber = getPart("street_number");
+      const city = getPart("locality");
+      const streetFull =
+        [route, streetNumber].filter(Boolean).join(" ") || fallback;
+      address = [streetFull, city].filter(Boolean).join(", ");
+    }
+
+    const primaryType =
+      place.types?.find((type) => allowedTypes.includes(type)) ||
+      place.types?.[0];
+
+    return {
+      ...place,
+      google_place_id: place.id,
+      is_quiet_space: false,
+      display_name: place?.displayName?.text ?? null,
+      address: address ?? null,
+      place_type: primaryType,
+      is_suitable: true,
+      outdoor_seating: place?.outdoorSeating ?? null,
+      photo_url: null,
+      photo_attribution: null,
+      total_rating: null,
+      wifi_rating: null,
+      noise_level_rating: null,
+      seating_comfort_rating: null,
+      charging_accessibility_rating: null,
+      location: {
+        lat: place.location?.latitude,
+        lng: place.location?.longitude,
+      },
+    };
+  });
+
+  const combinedResults = [...(data || []), ...normalizedGooglePlace];
   console.log("COMBINED RESULTS:", combinedResults);
   return combinedResults.slice(0, 5);
 };
