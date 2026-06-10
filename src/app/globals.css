@@ -6,9 +6,9 @@
   --br-searchbar: 20px;
   --border: 1px solid rgba(131, 130, 130, 0.3);
   --box-shadow-searchbar:
-    1px 2px 2px rgba(0, 0, 0, 0.2), -1px -1px 2px rgba(0, 0, 0, 0.1);
+    1px 4px 6px rgba(0, 0, 0, 0.3), 0px -1px 2px rgba(0, 0, 0, 0.1);
   --box-shadow-infoWindow:
-    4px 6px 10px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(0, 0, 0, 0.2);
+    4px 6px 6px rgba(0, 0, 0, 0.2), 0px -3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .light {
@@ -18,7 +18,7 @@
   --bg-infowindow: rgba(255, 255, 255, 0.6);
   --bg: rgb(250, 250, 250);
   --box-shadow:
-    1px 2px 2px rgba(31, 31, 31, 0.2), -1px -1px 2px rgba(31, 31, 31, 0.1);
+    1px 3px 3px rgba(31, 31, 31, 0.3), 0px -1px 1px rgba(31, 31, 31, 0.1);
   --bg-foreground: #ffffff;
   --bg-input: rgba(255, 255, 255, 0.8);
   --backdrop-filter: blur(10px);

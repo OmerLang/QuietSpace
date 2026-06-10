@@ -97,21 +97,16 @@ export default function Navbar() {
             className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
             textClassName={styles.btnText}
           />
-          <span className={styles.spacer}></span>
-          {user ? (
-            <NavLink
-              href="/profile"
-              className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
-            >
-              <span className={styles.btnText}>Profile</span>
-            </NavLink>
-          ) : (
-            <button
-              className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
-              onClick={() => openOverlay("signup")}
-            >
-              <span className={styles.btnText}>Signup</span>
-            </button>
+          {!user && (
+            <>
+              <span className={styles.spacer}></span>
+              <button
+                className={`${styles.button} ${isMenuOpen ? styles.buttonShow : ""}`}
+                onClick={() => openOverlay("signup")}
+              >
+                <span className={styles.btnText}>Signup</span>
+              </button>
+            </>
           )}
         </div>
       </div>

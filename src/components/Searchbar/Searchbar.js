@@ -48,7 +48,6 @@ export const Searchbar = () => {
       try {
         const currentResultsArr = await handleSearch(input, lat, lng);
 
-        // Only update state if no other keystroke has happened since this request fired
         if (isCurrentRequest) {
           setSearchResults(currentResultsArr || []);
           setSearchInputActive(true);

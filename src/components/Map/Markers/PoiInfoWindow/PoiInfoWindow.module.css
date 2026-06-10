@@ -156,7 +156,6 @@ html {
   border: var(--border);
   background: var(--bg-redirect-btn);
   color: inherit;
-  box-shadow: var(--box-shadow);
   transition: all 0.2s ease;
   cursor: pointer;
 }

@@ -19,27 +19,56 @@ const filterGoogleArray = (dbArr, gArr) => {
     if (existingIds.has(gPlace.id)) {
       return false;
     }
-
     existingIds.add(gPlace.id);
     return true;
   });
 };
 
 export const handleSearch = async (searchTerm, lat, lng) => {
-  console.log("Search is:", searchTerm);
   const supabase = await createClient();
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  const responseIDs = await fetch(
+    "https://places.googleapis.com/v1/places:searchText",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        textQuery: searchTerm,
+        locationBias: {
+          circle: {
+            center: {
+              latitude: lat,
+              longitude: lng,
+            },
+            radius: 10000.0,
+          },
+        },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": `${apiKey}`,
+        "X-Goog-FieldMask": "places.id",
+      },
+    },
+  );
+  const { places: placesIDs } = await responseIDs.json();
+  console.log("placesByGoogle:", placesIDs);
+
+  const placesIDsArr = placesIDs.map((placeID) => placeID.id) || [];
+  if (placesIDs.length < 1) {
+    return [];
+  }
   const { data, error } = await supabase
     .from("search_places_view")
     .select("*")
-    .like("display_name", `%${searchTerm}%`)
+    .in("google_place_id", placesIDsArr)
     .limit(5);
   if (error) {
     console.error("supabase error:", error);
     return [];
   }
-  if (data.length >= 5) {
-    return data.slice(0, 5);
+  console.log("my supabase data with 5 limit:", data);
+  if (data.length === 5) {
+    return data;
   }
   const response = await fetch(
     "https://places.googleapis.com/v1/places:searchText",
@@ -65,16 +94,20 @@ export const handleSearch = async (searchTerm, lat, lng) => {
       },
     },
   );
-  const { places } = await response.json();
-  const placesArray = places || [];
-  console.log("google places BEFORE filtering:", placesArray);
-  const filteredPlacesType = placesArray.filter((place) =>
+  const { places: places2 } = await response.json();
+  console.log("Places2:", places2);
+
+  const fullPlaces = places2 || [];
+  const fullPlacesAfterTypeFiltered = fullPlaces.filter((place) =>
     place.types?.some((type) => allowedTypes.includes(type)),
   );
-  const filteredPlaces = filterGoogleArray(data, filteredPlacesType);
-  console.log("google places AFTER filtering:", placesArray);
+  const gPlacesTotallyFiltered = filterGoogleArray(
+    data,
+    fullPlacesAfterTypeFiltered,
+  );
+  console.log("google places post all filtering:", gPlacesTotallyFiltered);
 
-  const dbRowsToInsert = filteredPlaces.map((place) => {
+  const dbRowsToInsert = gPlacesTotallyFiltered.map((place) => {
     let address = null;
     if (place?.addressComponents) {
       const components = place.addressComponents;
@@ -114,48 +147,15 @@ export const handleSearch = async (searchTerm, lat, lng) => {
       console.error("Error background caching places:", insertError.message);
     }
   }
-  const dbRowLookup = new Map(
-    dbRowsToInsert.map((row) => [row.google_place_id, row]),
-  );
-
-  const fullyNormalizedPlaces = filteredPlaces
-    .map((originalPlace) => {
-      if (!originalPlace || !originalPlace.location) return null;
-
-      const dbRow = dbRowLookup.get(originalPlace.id);
-      if (!dbRow) return null;
-
-      return {
-        google_place_id: dbRow.google_place_id,
-        display_name: dbRow.display_name,
-        is_suitable: true,
-        address: dbRow.address,
-        outdoor_seating: dbRow.outdoor_seating,
-        photo_url: null,
-        photo_attribution: null,
-        is_quiet_space: false,
-        total_rating: null,
-        wifi_rating: null,
-        noise_level_rating: null,
-        seating_comfort_rating: null,
-        charging_accessibility_rating: null,
-        location: {
-          lat: originalPlace.location.latitude,
-          lng: originalPlace.location.longitude,
-        },
-      };
-    })
-    .filter(Boolean);
-  console.log("filteredPlaces", filteredPlaces);
 
   after(async () => {
-    if (filteredPlaces.length === 0) return;
+    if (gPlacesTotallyFiltered.length === 0) return;
     console.log(
-      `[After Context] Executing image pipeline for ${filteredPlaces.length} nodes.`,
+      `[After Context] Executing image pipeline for ${gPlacesTotallyFiltered.length} nodes.`,
     );
 
     await Promise.all(
-      filteredPlaces.map(async (place) => {
+      gPlacesTotallyFiltered.map(async (place) => {
         // 1. Check if the place even has a photo from Google
         const firstImage = place.photos ? place.photos[0] : null;
         if (!firstImage) return;
@@ -240,21 +240,8 @@ export const handleSearch = async (searchTerm, lat, lng) => {
     console.log("[After Context] Image sync completed successfully.");
   });
 
-  const combinedResults = [...(data || []), ...fullyNormalizedPlaces];
-  // 3. Run the final unique filter pass over the combined array pool
-  // const finalSanitizedSet = new Set();
-  // const uniqueCombinedResults = combinedResults.filter((place) => {
-  //   if (!place || !place.google_place_id) return false;
-
-  //   if (finalSanitizedSet.has(place.google_place_id)) {
-  //     return false;
-  //   }
-
-  //   finalSanitizedSet.add(place.google_place_id);
-  //   return true;
-  // });
-
-  // 4. SLICE LAST: Cut down the perfectly clean, duplicate-free array to exactly 5 elements
+  const combinedResults = [...(data || []), ...dbRowsToInsert];
+  console.log("COMBINED RESULTS:", combinedResults);
   return combinedResults.slice(0, 5);
 };
 export const fetchImageToPoi = async (poi) => {
