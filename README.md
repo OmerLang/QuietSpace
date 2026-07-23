@@ -24,6 +24,15 @@ Standard navigation platforms (like Google Maps or Yelp) prioritize business ope
 - **🗺️ Interactive Spatial Mapping:** Integrates real-time geo-location queries to surface nearby spots based on the user's immediate workflow needs.
 - **👥 Crowd-Sourced Verification:** Features a submission and verification mechanism that aggregates community feedback to keep location metrics accurate.
 
+
+
+<img width="379" height="836" alt="image" src="https://github.com/user-attachments/assets/c47536a4-caa9-424f-950b-9867487f2df4" />
+
+<img width="143" height="192" alt="Screenshot 2026-07-23 180936" src="https://github.com/user-attachments/assets/d4fa6268-0fa1-4893-a759-3ddd037f3e32" />
+
+<img width="381" height="833" alt="image" src="https://github.com/user-attachments/assets/f37d3d31-52e7-42ce-8a24-782f38d0729a" />
+
+
 ---
 
 ## 🏗️ Technical Architecture
