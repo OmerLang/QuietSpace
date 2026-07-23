@@ -28,7 +28,7 @@ Standard navigation platforms (like Google Maps or Yelp) prioritize business ope
 
 <img width="379" height="836" alt="image" src="https://github.com/user-attachments/assets/c47536a4-caa9-424f-950b-9867487f2df4" />
 
-<img width="203" height="409" alt="Screenshot 2026-07-23 180936" src="https://github.com/user-attachments/assets/dffd4390-b631-44de-b1a0-08ea88543aeb" />
+<img width="379" height="780" alt="Screenshot 2026-07-23 180936" src="https://github.com/user-attachments/assets/dffd4390-b631-44de-b1a0-08ea88543aeb" />
 
 <img width="381" height="833" alt="image" src="https://github.com/user-attachments/assets/f37d3d31-52e7-42ce-8a24-782f38d0729a" />
 
