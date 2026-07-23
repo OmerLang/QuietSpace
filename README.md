@@ -1,4 +1,4 @@
-# 📍 QuiteSpace
+# 📍 QuietSpace
 
 > **Find your focus.** A Progressive Web App (PWA) designed to help students and remote workers discover ideal, low-distraction environments for productivity.
 
