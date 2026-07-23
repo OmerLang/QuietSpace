@@ -13,7 +13,7 @@
 
 Standard navigation platforms (like Google Maps or Yelp) prioritize business operating hours, food reviews, and driving directions. However, remote workers and students evaluate spaces based on entirely different criteria: **noise levels, outlet availability, Wi-Fi reliability, and seating comfort.**
 
-**QuiteSpace** addresses this gap by crowdsourcing user-verified environmental metrics, ranking local cafes, libraries, and public spaces specifically for productivity.
+**QuietSpace** addresses this gap by crowdsourcing user-verified environmental metrics, ranking local cafes, libraries, and public spaces specifically for productivity.
 
 ---
 
