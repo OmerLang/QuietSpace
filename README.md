@@ -4,7 +4,7 @@
 
 [![Next.js](https://img.shields.io/badge/Next.js-14%2B-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![PWA Ready](https://img.shields.io/badge/PWA-Supported-blue?style=flat-square&logo=pwa)](https://web.dev/progressive-web-apps/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![CSS Modules](https://img.shields.io/badge/CSS_Modules-Scoped_Styles-000000?style=flat-square&logo=css3&logoColor=white)](https://github.com/css-modules/css-modules)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
 
 ---
@@ -31,7 +31,7 @@ Standard navigation platforms (like Google Maps or Yelp) prioritize business ope
 | Layer | Technology | Key Responsibility |
 | :--- | :--- | :--- |
 | **Frontend Framework** | **Next.js (App Router)** | Server-side rendering, routing, and UI component architecture |
-| **Styling & UI** | **Tailwind CSS** | Responsive layouts and design system |
+| **Styling & UI** | **CSS Modules** | Component-scoped styling, modular design system, and global style safety |
 | **Mobile Integration** | **PWA Service Workers** | Cache management, offline readiness, and web manifest configuration |
 | **Backend & Database** | **Supabase (PostgreSQL)** | Relational data storage, authentication, and spatial queries |
 | **Mapping Engine** | **Google Maps API** | Spatial rendering, interactive markers, and location data |
@@ -41,8 +41,9 @@ Standard navigation platforms (like Google Maps or Yelp) prioritize business ope
 ## 📐 Key Design & Engineering Considerations
 
 1. **Environmental Data Schema:** Designed a structured relational schema in Supabase to track variable environmental attributes (e.g., quietness score, Wi-Fi strength) per location.
-2. **Performance & PWA Strategy:** Configured service workers and caching logic to ensure low latency and smooth navigation across both desktop and mobile devices.
-3. **User-Centric UX:** Tailored the interactive map controls specifically to allow multi-metric filtering without cluttering the spatial view.
+2. **Modular Styling Strategy:** Implemented CSS Modules to maintain strict component-scoped styling, preventing selector collision while ensuring a lightweight, maintainable UI architecture.
+3. **Performance & PWA Strategy:** Configured service workers and caching logic to ensure low latency and smooth navigation across both desktop and mobile devices.
+4. **User-Centric UX:** Tailored the interactive map controls specifically to allow multi-metric filtering without cluttering the spatial view.
 
 ---
 
