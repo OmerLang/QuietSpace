@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📍 QuiteSpace
 
-## Getting Started
+> **Find your focus.** A Progressive Web App (PWA) designed to help students and remote workers discover ideal, low-distraction environments for productivity.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-14%2B-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Supported-blue?style=flat-square&logo=pwa)](https://web.dev/progressive-web-apps/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Overview & Problem Statement
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Standard navigation platforms (like Google Maps or Yelp) prioritize business operating hours, food reviews, and driving directions. However, remote workers and students evaluate spaces based on entirely different criteria: **noise levels, outlet availability, Wi-Fi reliability, and seating comfort.**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**QuiteSpace** addresses this gap by crowdsourcing user-verified environmental metrics, ranking local cafes, libraries, and public spaces specifically for productivity.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Core Features & System Capabilities
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **📊 Productivity-First Data Model:** Users filter and view study locations using real-world productivity variables rather than general consumer ratings.
+- **📱 Progressive Web App (PWA):** Built for cross-platform accessibility with installability, instant loading, and mobile-optimized touch navigation.
+- **🗺️ Interactive Spatial Mapping:** Integrates real-time geo-location queries to surface nearby spots based on the user's immediate workflow needs.
+- **👥 Crowd-Sourced Verification:** Features a submission and verification mechanism that aggregates community feedback to keep location metrics accurate.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🏗️ Technical Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Layer | Technology | Key Responsibility |
+| :--- | :--- | :--- |
+| **Frontend Framework** | **Next.js (App Router)** | Server-side rendering, routing, and UI component architecture |
+| **Styling & UI** | **Tailwind CSS** | Responsive layouts and design system |
+| **Mobile Integration** | **PWA Service Workers** | Cache management, offline readiness, and web manifest configuration |
+| **Backend & Database** | **Supabase (PostgreSQL)** | Relational data storage, authentication, and spatial queries |
+| **Mapping Engine** | **Google Maps API** | Spatial rendering, interactive markers, and location data |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📐 Key Design & Engineering Considerations
+
+1. **Environmental Data Schema:** Designed a structured relational schema in Supabase to track variable environmental attributes (e.g., quietness score, Wi-Fi strength) per location.
+2. **Performance & PWA Strategy:** Configured service workers and caching logic to ensure low latency and smooth navigation across both desktop and mobile devices.
+3. **User-Centric UX:** Tailored the interactive map controls specifically to allow multi-metric filtering without cluttering the spatial view.
+
+---
+
+## 📄 License & Credits
+
+Developed as a university final project. All rights reserved.
